@@ -1,0 +1,19 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://finestmedia.ee/currencyconverter/generated" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CurrencyDataSources">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CurrencyDataSource" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element type="xs:boolean" name="enabled"/>
+              <xs:element type="xs:string" name="url"/>
+              <xs:element type="xs:string" name="dateFormat"/>
+              <xs:element type="xs:string" name="dao"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
