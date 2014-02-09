@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CurrencyDataSources>
+	<CurrencyDataSource>
+		<name>Eesti Pank</name>
+		<enabled>true</enabled>
+		<url>http://statistika.eestipank.ee/Reports?type=curd&amp;format=xml&amp;lng=est&amp;print=off&amp;date1=</url>
+		<dateFormat>YYYY-MM-DD</dateFormat>
+		<dao>EestiPankDao</dao>
+	</CurrencyDataSource>
+	<CurrencyDataSource>
+		<name>Leedu Pank</name>
+		<enabled>true</enabled>
+		<url>http://webservices.lb.lt/ExchangeRates/ExchangeRates.asmx/getExchangeRatesByDate?Date=</url>
+		<dateFormat>YYYY-MM-DD</dateFormat>
+		<dao>LeeduPankDao</dao>
+	</CurrencyDataSource>
+</CurrencyDataSources>
