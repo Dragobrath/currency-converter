@@ -1,4 +1,4 @@
-package ee.finestmedia.currencyconverter;
+package ee.finestmedia.currencyconverter.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
