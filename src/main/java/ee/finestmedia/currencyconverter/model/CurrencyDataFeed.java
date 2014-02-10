@@ -1,55 +1,70 @@
 package ee.finestmedia.currencyconverter.model;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Date;
+import java.util.Set;
+
+import ee.finestmedia.currencyconverter.generated.CurrencyDataSources;
 
 public class CurrencyDataFeed {
 
-  private String currencyCode;
-  private String displayName;
-  private Date date;
-  private BigDecimal rate;
-  
-  public CurrencyDataFeed() {
-  }
-  
-  public CurrencyDataFeed(String currencyCode, String displayName, Date date, BigDecimal rate) {
-    this.currencyCode = currencyCode;
-    this.displayName = displayName;
-    this.date = date;
-    this.rate = rate;
+  private CurrencyDataSources.CurrencyDataSource currencyDataSource;
+  private Set<Entry> entries;
+
+  public CurrencyDataSources.CurrencyDataSource getCurrencyDataSource() {
+    return currencyDataSource;
   }
 
-  public String getCurrencyCode() {
-    return currencyCode;
+  public void setCurrencyDataSource(CurrencyDataSources.CurrencyDataSource currencyDataSource) {
+    this.currencyDataSource = currencyDataSource;
   }
 
-  public void setCurrencyCode(String currencyCode) {
-    this.currencyCode = currencyCode;
+  public Set<Entry> getEntries() {
+    return entries;
   }
 
-  public String getDisplayName() {
-    return displayName;
+  public void setEntries(Set<Entry> entries) {
+    this.entries = entries;
   }
 
-  public void setDisplayName(String displayName) {
-    this.displayName = displayName;
-  }
+  public class Entry {
+    private Currency currency;
+    private Date date;
+    private BigDecimal rate;
 
-  public Date getDate() {
-    return date;
-  }
+    public Entry() {
+    }
 
-  public void setDate(Date date) {
-    this.date = date;
-  }
+    public Entry(String currencyCode, Date date, BigDecimal rate) {
+      this.currency = Currency.getInstance(currencyCode);
+      this.date = date;
+      this.rate = rate;
+    }
 
-  public BigDecimal getRate() {
-    return rate;
-  }
+    public Currency getCurrency() {
+      return currency;
+    }
 
-  public void setRate(BigDecimal rate) {
-    this.rate = rate;
-  }
+    public void setCurrency(Currency currency) {
+      this.currency = currency;
+    }
 
+    public Date getDate() {
+      return date;
+    }
+
+    public void setDate(Date date) {
+      this.date = date;
+    }
+
+    public BigDecimal getRate() {
+      return rate;
+    }
+
+    public void setRate(BigDecimal rate) {
+      this.rate = rate;
+    }
+
+  }
 }
