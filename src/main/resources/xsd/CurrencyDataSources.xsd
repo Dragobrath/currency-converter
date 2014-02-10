@@ -9,7 +9,7 @@
               <xs:element type="xs:boolean" name="enabled"/>
               <xs:element type="xs:string" name="url"/>
               <xs:element type="xs:string" name="dateFormat"/>
-              <xs:element type="xs:string" name="dao"/>
+              <xs:element type="xs:string" name="daoName"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
