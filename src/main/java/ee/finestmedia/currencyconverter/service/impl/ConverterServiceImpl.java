@@ -3,15 +3,14 @@
  */
 package ee.finestmedia.currencyconverter.service.impl;
 
-import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
-import ee.finestmedia.currencyconverter.dao.CurrencyDataFeedDao;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ee.finestmedia.currencyconverter.client.CurrencyDataFeedClient;
 import ee.finestmedia.currencyconverter.generated.CurrencyDataSources;
 import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
 import ee.finestmedia.currencyconverter.model.UnifiedCurrencyDataFeed;
@@ -26,6 +25,9 @@ public class ConverterServiceImpl implements ConverterService {
 
   @Autowired
   private ConfigurationService configurationService;
+  
+  @Autowired
+  private CurrencyDataFeedClient currencyDataFeedClient;
 
   @Override
   public String getCurrenciesList() {
@@ -50,21 +52,14 @@ public class ConverterServiceImpl implements ConverterService {
     CurrencyDataSources currencyDataSources = configurationService.getCurrencyDataSources();
     UnifiedCurrencyDataFeed unifiedCurrencyDataFeed = new UnifiedCurrencyDataFeed();
     for (CurrencyDataSources.CurrencyDataSource currencyDataSource : currencyDataSources.getCurrencyDataSource()) {
-      unifiedCurrencyDataFeed.addCurrencyDataFeed(getDataSourceFeed(currencyDataSource, date));
+      unifiedCurrencyDataFeed.addCurrencyDataFeed(getCurrencyFeedFromDataSource(currencyDataSource, date));
     }
     return unifiedCurrencyDataFeed;
   }
 
-  private CurrencyDataFeed getDataSourceFeed(CurrencyDataSources.CurrencyDataSource currencyDataSource, Date date) {
-    getDao(currencyDataSource.getDaoName()).getCurrencyDataFeed(currencyDataSource, date);
+  private CurrencyDataFeed getCurrencyFeedFromDataSource(CurrencyDataSources.CurrencyDataSource currencyDataSource, Date date) {
+	  currencyDataFeedClient.getCurrencyDataFeed(currencyDataSource, date);
     return null;
-  }
-
-  private CurrencyDataFeedDao getDao(String daoName) {
-    try (ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("/WEB-INF/classes/applicationContext.xml")) {
-      CurrencyDataFeedDao dao = (CurrencyDataFeedDao) applicationContext.getBean(daoName);
-      return dao;
-    }
   }
 
 }
