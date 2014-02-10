@@ -2,6 +2,7 @@ package ee.finestmedia.currencyconverter.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBContext;
@@ -33,9 +34,9 @@ public class XMLProcessingServiceImpl implements XMLProcessingService {
   }
 
   @Override
-  public Object unmarshalXMLFromFile(String fileName, Class<?> classToUnmarshall) throws JAXBException {
+  public Object unmarshalXMLFromFile(String fileName, Class<?> classToUnmarshall) throws JAXBException, IOException {
     JAXBContext jc = JAXBContext.newInstance(classToUnmarshall);
-    return jc.createUnmarshaller().unmarshal(new File(fileName));
+    return jc.createUnmarshaller().unmarshal(new ClassPathResource(fileName).getFile());
   }
 
   private HttpURLConnection getHttpConnection(String uri) throws IOException {
