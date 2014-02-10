@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBException;
 
+import java.io.IOException;
+
 import ee.finestmedia.currencyconverter.generated.CurrencyDataSources;
 import ee.finestmedia.currencyconverter.service.ConfigurationService;
 import ee.finestmedia.currencyconverter.service.XMLProcessingService;
@@ -18,17 +20,24 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
   @Autowired
   private XMLProcessingService xmlProcessingService;
+  
+  private CurrencyDataSources currencyDataSources = new CurrencyDataSources();
 
   public CurrencyDataSources getCurrencyDataSources() {
-    CurrencyDataSources unmarshalledObject;
+    if (isThereAnyCurrencyDataSources()) {
+      return currencyDataSources;
+    }
     try {
-      unmarshalledObject = (CurrencyDataSources) xmlProcessingService.unmarshalXMLFromFile("currencyDataSources.xml", CurrencyDataSources.class);
-    } catch (JAXBException e) {
-      unmarshalledObject = new CurrencyDataSources();
+      currencyDataSources = (CurrencyDataSources) xmlProcessingService.unmarshalXMLFromFile("currencyDataSources.xml", CurrencyDataSources.class);
+    } catch (JAXBException | IOException e) {
       LOG.error("Could not load currency data source configuration");
       LOG.error(e.getMessage(), e);
     }
-    return unmarshalledObject;
+    return currencyDataSources;
+  }
+  
+  private boolean isThereAnyCurrencyDataSources() {
+    return !(currencyDataSources.getCurrencyDataSource() == null || currencyDataSources.getCurrencyDataSource().isEmpty());
   }
 
 }
