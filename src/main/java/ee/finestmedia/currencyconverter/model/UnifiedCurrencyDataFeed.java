@@ -9,17 +9,17 @@ import ee.finestmedia.currencyconverter.util.CollectionsUtil;
 
 public class UnifiedCurrencyDataFeed {
 
-  private Set<CurrencyDataFeed.Entry> unifiedDataFeedEntries = new HashSet<>();
+  private Set<CurrencyDataFeed.Entry> unifiedDataFeedEntrySet = new HashSet<>();
 
   private List<CurrencyDataFeed> dataFeeds = new ArrayList<>();
 
   public void addCurrencyDataFeed(CurrencyDataFeed currencyDataFeed) {
-    this.unifiedDataFeedEntries.addAll(currencyDataFeed.getEntries());
+    this.unifiedDataFeedEntrySet.addAll(currencyDataFeed.getEntries());
     this.dataFeeds.add(currencyDataFeed);
   }
 
   public List<CurrencyDataFeed.Entry> getUnifiedDataFeedEntries() {
-    return CollectionsUtil.asSortedList(unifiedDataFeedEntries);
+    return CollectionsUtil.asSortedList(unifiedDataFeedEntrySet);
   }
 
   public List<CurrencyDataFeed> getDataFeeds() {

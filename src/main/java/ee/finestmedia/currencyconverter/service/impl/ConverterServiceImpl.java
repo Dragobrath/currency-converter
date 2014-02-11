@@ -7,16 +7,12 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBException;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
-
-import ee.finestmedia.currencyconverter.util.exception.MappingException;
 
 import ee.finestmedia.currencyconverter.client.ClientFactory;
 import ee.finestmedia.currencyconverter.client.CurrencyDataFeedClient;
@@ -26,6 +22,7 @@ import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
 import ee.finestmedia.currencyconverter.model.UnifiedCurrencyDataFeed;
 import ee.finestmedia.currencyconverter.service.ConfigurationService;
 import ee.finestmedia.currencyconverter.service.ConverterService;
+import ee.finestmedia.currencyconverter.util.exception.MappingException;
 
 /**
  * @author Anton Dubov

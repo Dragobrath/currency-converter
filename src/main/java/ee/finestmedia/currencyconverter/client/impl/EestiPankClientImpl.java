@@ -40,13 +40,17 @@ public class EestiPankClientImpl extends CurrencyDataFeedClient {
     Date fixingsDate = new SimpleDateFormat(RESPONSE_DATE_FORMAT).parse(fixingsDateAsString);
 
     for (Currency currency : report.getBody().getCurrencies().getCurrency()) {
-      BigDecimal rateAsBigDecimal = BigDecimal.valueOf(currency.getRate());
-      CurrencyDataFeed.Entry entry = currencyDataFeed.new Entry(currency.getName(), fixingsDate, rateAsBigDecimal);
+      BigDecimal rateAsBigDecimal = parseRateAsBigDecimal(currency.getRate());
+      CurrencyDataFeed.Entry entry = new CurrencyDataFeed.Entry(currency.getName(), fixingsDate, rateAsBigDecimal);
       entry.setDisplayName(currency.getText());
       entries.add(entry);
     }
 
     return currencyDataFeed;
+  }
+  
+  private BigDecimal parseRateAsBigDecimal(String rate) {
+    return new BigDecimal(rate.replace(",", ".").replace(" ", ""));
   }
 
   @Override

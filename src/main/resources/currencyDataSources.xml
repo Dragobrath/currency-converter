@@ -3,9 +3,9 @@
 	<CurrencyDataSource>
 		<id>eestipank</id>
 		<displayName>Eesti Pank</displayName>
-		<enabled>false</enabled>
-		<url>http://www.eestipank.ee/valuutakursid?is_ajax=true&amp;imported_at=</url>
-		<dateFormat>dd.MM.YY</dateFormat>
+		<enabled>true</enabled>
+		<url>http://statistika.eestipank.ee/Reports?type=curd&amp;format=xml&amp;lng=est&amp;print=off&amp;date1=</url>
+		<dateFormat>YYYY-MM-dd</dateFormat>
 	</CurrencyDataSource>
 	<CurrencyDataSource>
 		<id>leedupank</id>

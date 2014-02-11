@@ -30,7 +30,7 @@ public class CurrencyDataFeed {
     return CollectionsUtil.asSortedList(entries);
   }
 
-  public class Entry implements Comparable<Entry> {
+  public static class Entry implements Comparable<Entry> {
     private String currencyCode;
     private String displayName;
     private Date date;
@@ -81,7 +81,6 @@ public class CurrencyDataFeed {
     public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + getOuterType().hashCode();
       result = prime * result + ((currencyCode == null) ? 0 : currencyCode.hashCode());
       return result;
     }
@@ -95,18 +94,12 @@ public class CurrencyDataFeed {
       if (getClass() != obj.getClass())
         return false;
       Entry other = (Entry) obj;
-      if (!getOuterType().equals(other.getOuterType()))
-        return false;
       if (currencyCode == null) {
         if (other.currencyCode != null)
           return false;
       } else if (!currencyCode.equals(other.currencyCode))
         return false;
       return true;
-    }
-
-    private CurrencyDataFeed getOuterType() {
-      return CurrencyDataFeed.this;
     }
 
     @Override

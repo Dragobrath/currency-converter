@@ -50,7 +50,7 @@ public class LeeduPankClientImpl extends CurrencyDataFeedClient {
       for (ExchangeRates.Item item : exchangeRates.getItem()) {
         Date date = simpleDateFormat.parse(item.getDate());
         BigDecimal rateOfEURToCurrency = getRateOfEURToCurrency(item, rateOfEURToLTL);
-        CurrencyDataFeed.Entry entry = currencyDataFeed.new Entry(item.getCurrency(), date, rateOfEURToCurrency);
+        CurrencyDataFeed.Entry entry = new CurrencyDataFeed.Entry(item.getCurrency(), date, rateOfEURToCurrency);
         entry.setDisplayName(Currency.getInstance(item.getCurrency()).getDisplayName());
         entries.add(entry);
       }
