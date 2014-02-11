@@ -16,6 +16,8 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
 
+import ee.finestmedia.currencyconverter.util.exception.MappingException;
+
 import ee.finestmedia.currencyconverter.client.ClientFactory;
 import ee.finestmedia.currencyconverter.client.CurrencyDataFeedClient;
 import ee.finestmedia.currencyconverter.generated.CurrencyDataSources;
@@ -24,12 +26,10 @@ import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
 import ee.finestmedia.currencyconverter.model.UnifiedCurrencyDataFeed;
 import ee.finestmedia.currencyconverter.service.ConfigurationService;
 import ee.finestmedia.currencyconverter.service.ConverterService;
-import ee.finestmedia.currencyconverter.util.MappingException;
 
 /**
  * @author Anton Dubov
  */
-@Service
 public class ConverterServiceImpl implements ConverterService {
   
   private static final Logger LOG = LoggerFactory.getLogger(ConverterServiceImpl.class);
@@ -56,7 +56,7 @@ public class ConverterServiceImpl implements ConverterService {
   }
 
   @Override
-  public UnifiedCurrencyDataFeed convertCurrency(String originCurrencyCode, String destinationCurrencyCode, BigDecimal amount, Date date) {
+  public UnifiedCurrencyDataFeed convertCurrency(String originCurrencyCode, String destinationCurrencyCode, double amount, Date date) {
     UnifiedCurrencyDataFeed dataFeeds = new UnifiedCurrencyDataFeed();
     try {
       dataFeeds = getUnifiedCurrencyFeed(date);

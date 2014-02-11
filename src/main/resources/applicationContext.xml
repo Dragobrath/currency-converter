@@ -24,8 +24,13 @@
 	<context:component-scan base-package="ee.finestmedia.currencyconverter.*" />
 	
 	<!-- ServiceFactories and Services -->
-	<bean id="eestipank" class="ee.finestmedia.currencyconverter.client.impl.EestiPankClientImpl" />
-	<bean id="leedupank" class="ee.finestmedia.currencyconverter.client.impl.LeeduPankClientImpl" />
+	<bean id="eestipank" class="ee.finestmedia.currencyconverter.client.impl.EestiPankClientImpl">
+		<property name="parserFactory" ref="parserFactory"/>
+	</bean>
+	
+	<bean id="leedupank" class="ee.finestmedia.currencyconverter.client.impl.LeeduPankClientImpl">
+		<property name="parserFactory" ref="parserFactory"/>
+	</bean>
 	
 	<bean id="xmlParser" class="ee.finestmedia.currencyconverter.client.parser.impl.XmlParser" />
 
@@ -39,10 +44,6 @@
 	
 	<bean id="ConverterServiceImpl" class="ee.finestmedia.currencyconverter.service.impl.ConverterServiceImpl">
 		<property name="clientFactory" ref="clientFactory"/>
-	</bean>
-
-	<bean id="CurrencyDataFeedClient" class="ee.finestmedia.currencyconverter.client.CurrencyDataFeedClient">
-		<property name="parserFactory" ref="parserFactory"/>
 	</bean>
 	
 </beans>

@@ -10,7 +10,6 @@
               <xs:element type="xs:boolean" name="enabled"/>
               <xs:element type="xs:string" name="url"/>
               <xs:element type="xs:string" name="dateFormat" minOccurs="0"/>
-              <xs:element type="xs:string" name="dataType" minOccurs="0"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

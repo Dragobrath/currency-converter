@@ -15,6 +15,6 @@ public interface ConverterService {
 
   UnifiedCurrencyDataFeed getCurrenciesList();
 
-  UnifiedCurrencyDataFeed convertCurrency(String originCurrencyCode, String destinationCurrencyCode, BigDecimal amount, Date date);
+  UnifiedCurrencyDataFeed convertCurrency(String originCurrencyCode, String destinationCurrencyCode, double amount, Date date);
 
 }

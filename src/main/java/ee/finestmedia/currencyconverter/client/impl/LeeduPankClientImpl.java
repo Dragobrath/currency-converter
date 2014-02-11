@@ -10,28 +10,31 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.Set;
 
-import ee.finestmedia.currencyconverter.util.EURNotFoundException;
 import ee.finestmedia.currencyconverter.client.CurrencyDataFeedClient;
-import ee.finestmedia.currencyconverter.generated.leedupank.ExchangeRates;
+import ee.finestmedia.currencyconverter.client.parser.ParserFactory;
 import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
 import ee.finestmedia.currencyconverter.util.CurrencyUtil;
-import ee.finestmedia.currencyconverter.util.MappingException;
+import ee.finestmedia.currencyconverter.util.exception.EURNotFoundException;
+import ee.finestmedia.currencyconverter.util.exception.MappingException;
+import generated.ExchangeRates;
 
 public class LeeduPankClientImpl extends CurrencyDataFeedClient {
 
   private static final Logger LOG = LoggerFactory.getLogger(LeeduPankClientImpl.class);
 
   private static final Class<ExchangeRates> RESPONSE_TYPE = ExchangeRates.class;
+  private static final String DATA_TYPE = "xml";
   private static final String RESPONSE_DATE_FORMAT = "YYYY.MM.DD";
 
-  @Override
-  protected Class<?> getResponseType() {
-    return RESPONSE_TYPE;
+  private ParserFactory parserFactory;
+
+  public void setParserFactory(ParserFactory parserFactory) {
+    this.parserFactory = parserFactory;
   }
 
   @Override
   protected CurrencyDataFeed mapParserResponseToCurrencyDataFeedModel(Object parserResponse) throws MappingException, ParseException {
-    if (RESPONSE_TYPE.isAssignableFrom(parserResponse.getClass())) {
+    if (!RESPONSE_TYPE.isAssignableFrom(parserResponse.getClass())) {
       throw new MappingException(RESPONSE_DOES_NOT_MATCH);
     }
 
@@ -70,6 +73,21 @@ public class LeeduPankClientImpl extends CurrencyDataFeedClient {
     BigDecimal rateOfCurrencyToLTL = CurrencyUtil.divide(item.getRate(), item.getQuantity());
     BigDecimal rateOfEURToCurrency = rateOfEURToLTL.divide(rateOfCurrencyToLTL, CurrencyUtil.PRECISION_SCALE, BigDecimal.ROUND_HALF_UP);
     return rateOfEURToCurrency;
+  }
+
+  @Override
+  protected ParserFactory getParserFactory() {
+    return parserFactory;
+  }
+
+  @Override
+  protected Class<?> getResponseType() {
+    return RESPONSE_TYPE;
+  }
+
+  @Override
+  protected String getDataType() {
+    return DATA_TYPE;
   }
 
 }

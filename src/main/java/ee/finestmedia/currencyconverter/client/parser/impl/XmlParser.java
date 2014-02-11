@@ -12,7 +12,6 @@ import java.util.Date;
 
 import ee.finestmedia.currencyconverter.client.parser.Parser;
 import ee.finestmedia.currencyconverter.generated.CurrencyDataSources.CurrencyDataSource;
-import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
 import ee.finestmedia.currencyconverter.service.XMLProcessingService;
 
 /**
@@ -24,10 +23,9 @@ public class XmlParser implements Parser {
   @Autowired
   XMLProcessingService xmlProcessingService;
 
-  public CurrencyDataFeed getCurrencyDataFeed(CurrencyDataSource currencyDataSource, Date date, Class<?> responseType) throws JAXBException, IOException {
+  public Object getCurrencyDataFeed(CurrencyDataSource currencyDataSource, Date date, Class<?> responseType) throws JAXBException, IOException {
     String url = getUrlWithAppliedDate(currencyDataSource, date);
-    xmlProcessingService.unmarshalXMLFromURL(url, responseType);
-    return null;
+    return xmlProcessingService.unmarshalXMLFromURL(url, responseType);
   }
 
   private String getUrlWithAppliedDate(CurrencyDataSource currencyDataSource, Date date) {

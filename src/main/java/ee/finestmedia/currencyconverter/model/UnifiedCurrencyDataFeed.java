@@ -1,33 +1,29 @@
 package ee.finestmedia.currencyconverter.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ee.finestmedia.currencyconverter.util.CollectionsUtil;
+
 public class UnifiedCurrencyDataFeed {
 
-  private Set<CurrencyDataFeed.Entry> unifiedDataFeedEntrySet;
+  private Set<CurrencyDataFeed.Entry> unifiedDataFeedEntries = new HashSet<>();
 
-  private List<CurrencyDataFeed> dataFeeds;
+  private List<CurrencyDataFeed> dataFeeds = new ArrayList<>();
 
   public void addCurrencyDataFeed(CurrencyDataFeed currencyDataFeed) {
-    this.unifiedDataFeedEntrySet.addAll(currencyDataFeed.getEntries());
+    this.unifiedDataFeedEntries.addAll(currencyDataFeed.getEntries());
     this.dataFeeds.add(currencyDataFeed);
   }
 
-  public Set<CurrencyDataFeed.Entry> getUnifiedDataFeedEntrySet() {
-    return unifiedDataFeedEntrySet;
-  }
-
-  public void setUnifiedDataFeedEntrySet(Set<CurrencyDataFeed.Entry> unifiedDataFeedEntrySet) {
-    this.unifiedDataFeedEntrySet = unifiedDataFeedEntrySet;
+  public List<CurrencyDataFeed.Entry> getUnifiedDataFeedEntries() {
+    return CollectionsUtil.asSortedList(unifiedDataFeedEntries);
   }
 
   public List<CurrencyDataFeed> getDataFeeds() {
     return dataFeeds;
-  }
-
-  public void setDataFeeds(List<CurrencyDataFeed> dataFeeds) {
-    this.dataFeeds = dataFeeds;
   }
 
 }

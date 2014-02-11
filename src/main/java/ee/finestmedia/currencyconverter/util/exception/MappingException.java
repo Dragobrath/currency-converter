@@ -1,4 +1,4 @@
-package ee.finestmedia.currencyconverter.util;
+package ee.finestmedia.currencyconverter.util.exception;
 
 public class MappingException extends Exception {
   
