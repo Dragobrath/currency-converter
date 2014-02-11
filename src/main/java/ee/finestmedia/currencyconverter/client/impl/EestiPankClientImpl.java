@@ -6,15 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
-import ee.finestmedia.currencyconverter.util.exception.MappingException;
-
-import ee.finestmedia.currencyconverter.client.CurrencyDataFeedClient;
 import ee.finestmedia.currencyconverter.client.parser.ParserFactory;
 import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
+import ee.finestmedia.currencyconverter.util.exception.MappingException;
 import info.eestipank.producers.types.Report;
 import info.eestipank.producers.types.Report.Body.Currencies.Currency;
 
-public class EestiPankClientImpl extends CurrencyDataFeedClient {
+public class EestiPankClientImpl extends AbstractBaseClientImpl {
 
   private static final Class<?> RESPONSE_TYPE = Report.class;
   private static final String DATA_TYPE = "xml";

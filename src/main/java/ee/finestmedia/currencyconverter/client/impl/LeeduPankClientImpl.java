@@ -18,7 +18,7 @@ import ee.finestmedia.currencyconverter.util.exception.EURNotFoundException;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 import generated.ExchangeRates;
 
-public class LeeduPankClientImpl extends CurrencyDataFeedClient {
+public class LeeduPankClientImpl extends AbstractBaseClientImpl {
 
   private static final Logger LOG = LoggerFactory.getLogger(LeeduPankClientImpl.class);
 
