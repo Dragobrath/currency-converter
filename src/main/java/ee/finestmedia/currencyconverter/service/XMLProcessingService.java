@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public interface XMLProcessingService {
 
-  Object unmarshalXMLFromURL(String uri, Class<?> classToUnmarshall) throws JAXBException, IOException;
+  Object unmarshalXMLFromURL(String uri, Class<?> classToUnmarshal) throws JAXBException, IOException;
 
-  Object unmarshalXMLFromFile(String fileName, Class<?> classToUnmarshall) throws JAXBException, IOException;
+  Object unmarshalXMLFromFile(String fileName, Class<?> classToUnmarshal) throws JAXBException, IOException;
 
 }

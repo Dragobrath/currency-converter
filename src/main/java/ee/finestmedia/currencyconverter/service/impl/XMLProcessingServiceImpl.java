@@ -22,11 +22,11 @@ public class XMLProcessingServiceImpl implements XMLProcessingService {
   private static final Logger LOG = LoggerFactory.getLogger(XMLProcessingServiceImpl.class);
 
   @Override
-  public Object unmarshalXMLFromURL(String uri, Class<?> classToUnmarshall) throws JAXBException, IOException {
+  public Object unmarshalXMLFromURL(String uri, Class<?> classToUnmarshal) throws JAXBException, IOException {
     HttpURLConnection connection = getHttpConnection(uri);
     InputStream xml = connection.getInputStream();
 
-    JAXBContext jc = JAXBContext.newInstance(classToUnmarshall);
+    JAXBContext jc = JAXBContext.newInstance(classToUnmarshal);
     Object unmarshalledObject = jc.createUnmarshaller().unmarshal(xml);
 
     connection.disconnect();
@@ -34,8 +34,8 @@ public class XMLProcessingServiceImpl implements XMLProcessingService {
   }
 
   @Override
-  public Object unmarshalXMLFromFile(String fileName, Class<?> classToUnmarshall) throws JAXBException, IOException {
-    JAXBContext jc = JAXBContext.newInstance(classToUnmarshall);
+  public Object unmarshalXMLFromFile(String fileName, Class<?> classToUnmarshal) throws JAXBException, IOException {
+    JAXBContext jc = JAXBContext.newInstance(classToUnmarshal);
     return jc.createUnmarshaller().unmarshal(new ClassPathResource(fileName).getFile());
   }
 
