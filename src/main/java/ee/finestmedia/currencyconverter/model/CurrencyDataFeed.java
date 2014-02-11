@@ -5,18 +5,18 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.Set;
 
-import ee.finestmedia.currencyconverter.generated.CurrencyDataSources;
+import ee.finestmedia.currencyconverter.generated.CurrencyDataSources.CurrencyDataSource;
 
 public class CurrencyDataFeed {
 
-  private CurrencyDataSources.CurrencyDataSource currencyDataSource;
+  private CurrencyDataSource currencyDataSource;
   private Set<Entry> entries;
 
-  public CurrencyDataSources.CurrencyDataSource getCurrencyDataSource() {
+  public CurrencyDataSource getCurrencyDataSource() {
     return currencyDataSource;
   }
 
-  public void setCurrencyDataSource(CurrencyDataSources.CurrencyDataSource currencyDataSource) {
+  public void setCurrencyDataSource(CurrencyDataSource currencyDataSource) {
     this.currencyDataSource = currencyDataSource;
   }
 
@@ -29,7 +29,8 @@ public class CurrencyDataFeed {
   }
 
   public class Entry {
-    private Currency currency;
+    private String currencyCode;
+    private String displayName;
     private Date date;
     private BigDecimal rate;
 
@@ -37,17 +38,26 @@ public class CurrencyDataFeed {
     }
 
     public Entry(String currencyCode, Date date, BigDecimal rate) {
-      this.currency = Currency.getInstance(currencyCode);
+      this.setCurrencyCode(currencyCode);
+      this.setDisplayName(Currency.getInstance(currencyCode).getDisplayName());
       this.date = date;
       this.rate = rate;
     }
 
-    public Currency getCurrency() {
-      return currency;
+    public String getCurrencyCode() {
+      return currencyCode;
     }
 
-    public void setCurrency(Currency currency) {
-      this.currency = currency;
+    public void setCurrencyCode(String currencyCode) {
+      this.currencyCode = currencyCode;
+    }
+
+    public String getDisplayName() {
+      return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+      this.displayName = displayName;
     }
 
     public Date getDate() {
