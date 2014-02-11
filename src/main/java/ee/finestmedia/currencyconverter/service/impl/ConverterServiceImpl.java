@@ -3,19 +3,20 @@
  */
 package ee.finestmedia.currencyconverter.service.impl;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ee.finestmedia.currencyconverter.client.CurrencyDataFeedClient;
+import java.math.BigDecimal;
+import java.util.Date;
+
 import ee.finestmedia.currencyconverter.generated.CurrencyDataSources;
+import ee.finestmedia.currencyconverter.generated.CurrencyDataSources.CurrencyDataSource;
 import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
 import ee.finestmedia.currencyconverter.model.UnifiedCurrencyDataFeed;
 import ee.finestmedia.currencyconverter.service.ConfigurationService;
 import ee.finestmedia.currencyconverter.service.ConverterService;
+import ee.finestmedia.currencyconverter.util.ClientFactory;
 
 /**
  * @author Anton Dubov
@@ -26,8 +27,11 @@ public class ConverterServiceImpl implements ConverterService {
   @Autowired
   private ConfigurationService configurationService;
   
-  @Autowired
-  private CurrencyDataFeedClient currencyDataFeedClient;
+  private ClientFactory clientFactory;
+  
+  public void setClientFactory(ClientFactory clientFactory) {
+    this.clientFactory = clientFactory;
+  }
 
   @Override
   public String getCurrenciesList() {
@@ -51,14 +55,14 @@ public class ConverterServiceImpl implements ConverterService {
   private UnifiedCurrencyDataFeed getUnifiedCurrencyFeed(Date date) {
     CurrencyDataSources currencyDataSources = configurationService.getCurrencyDataSources();
     UnifiedCurrencyDataFeed unifiedCurrencyDataFeed = new UnifiedCurrencyDataFeed();
-    for (CurrencyDataSources.CurrencyDataSource currencyDataSource : currencyDataSources.getCurrencyDataSource()) {
+    for (CurrencyDataSource currencyDataSource : currencyDataSources.getCurrencyDataSource()) {
       unifiedCurrencyDataFeed.addCurrencyDataFeed(getCurrencyFeedFromDataSource(currencyDataSource, date));
     }
     return unifiedCurrencyDataFeed;
   }
 
-  private CurrencyDataFeed getCurrencyFeedFromDataSource(CurrencyDataSources.CurrencyDataSource currencyDataSource, Date date) {
-	  currencyDataFeedClient.getCurrencyDataFeed(currencyDataSource, date);
+  private CurrencyDataFeed getCurrencyFeedFromDataSource(CurrencyDataSource currencyDataSource, Date date) {
+    clientFactory.getClient(currencyDataSource.getName()).getCurrencyDataFeed(currencyDataSource, date);
     return null;
   }
 

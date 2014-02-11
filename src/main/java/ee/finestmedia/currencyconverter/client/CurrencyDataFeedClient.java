@@ -1,18 +1,18 @@
 package ee.finestmedia.currencyconverter.client;
 
-import java.util.Date;
-
 import org.springframework.stereotype.Service;
 
-import ee.finestmedia.currencyconverter.generated.CurrencyDataSources;
+import java.util.Date;
+
+import ee.finestmedia.currencyconverter.generated.CurrencyDataSources.CurrencyDataSource;
 import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
+import ee.finestmedia.currencyconverter.util.ParserFactory;
 
 @Service
-public class CurrencyDataFeedClient {
+public interface CurrencyDataFeedClient {
+
+  public CurrencyDataFeed getCurrencyDataFeed(CurrencyDataSource currencyDataSource, Date date);
   
-  public CurrencyDataFeed getCurrencyDataFeed(CurrencyDataSources.CurrencyDataSource currencyDataSource, Date date) {
-	  String dataType = currencyDataSource.getDataType();
-	  return null;
-  }
+  public void setParserFactory(ParserFactory parserFactory);
 
 }
