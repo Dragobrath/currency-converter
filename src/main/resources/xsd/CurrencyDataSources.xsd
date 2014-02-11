@@ -5,11 +5,12 @@
         <xs:element name="CurrencyDataSource" maxOccurs="unbounded" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
-              <xs:element type="xs:string" name="name"/>
+              <xs:element type="xs:string" name="id"/>
+              <xs:element type="xs:string" name="displayName"/>
               <xs:element type="xs:boolean" name="enabled"/>
               <xs:element type="xs:string" name="url"/>
-              <xs:element type="xs:string" name="dateFormat"/>
-              <xs:element type="xs:string" name="dataType"/>
+              <xs:element type="xs:string" name="dateFormat" minOccurs="0"/>
+              <xs:element type="xs:string" name="dataType" minOccurs="0"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CurrencyDataSources xmlns="http://finestmedia.ee/currencyconverter/generated">
 	<CurrencyDataSource>
-		<name>Eesti Pank</name>
-		<enabled>true</enabled>
-		<url>http://statistika.eestipank.ee/Reports?type=curd&amp;format=xml&amp;lng=est&amp;print=off&amp;date1=</url>
-		<dateFormat>YYYY-MM-DD</dateFormat>
-		<dataType>xml</dataType>
+		<id>eestipank</id>
+		<displayName>Eesti Pank</displayName>
+		<enabled>false</enabled>
+		<url>http://www.eestipank.ee/valuutakursid?is_ajax=true&amp;imported_at=</url>
+		<dateFormat>DD.MM.YY</dateFormat>
 	</CurrencyDataSource>
 	<CurrencyDataSource>
-		<name>Leedu Pank</name>
+		<id>leedupank</id>
+		<displayName>Leedu Pank</displayName>
 		<enabled>true</enabled>
 		<url>http://webservices.lb.lt/ExchangeRates/ExchangeRates.asmx/getExchangeRatesByDate?Date=</url>
 		<dateFormat>YYYY-MM-DD</dateFormat>
-		<dataType>xml</dataType>
 	</CurrencyDataSource>
 </CurrencyDataSources>

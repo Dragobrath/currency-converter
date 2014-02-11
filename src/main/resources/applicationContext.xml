@@ -24,17 +24,21 @@
 	<context:component-scan base-package="ee.finestmedia.currencyconverter.*" />
 	
 	<!-- ServiceFactories and Services -->
-	<bean id="Eesti Pank" class="ee.finestmedia.currencyconverter.client.impl.EestiPankClientImpl" />
-	<bean id="Leedu Pank" class="ee.finestmedia.currencyconverter.client.impl.LeeduPankClientImpl" />
+	<bean id="eestipank" class="ee.finestmedia.currencyconverter.client.impl.EestiPankClientImpl" />
+	<bean id="leedupank" class="ee.finestmedia.currencyconverter.client.impl.LeeduPankClientImpl" />
 	
 	<bean id="xmlParser" class="ee.finestmedia.currencyconverter.client.parser.impl.XmlParser" />
 
 	<bean id="clientFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
-		<property name="serviceLocatorInterface" value="ee.finestmedia.currencyconverter.util.ClientFactory"/>
+		<property name="serviceLocatorInterface" value="ee.finestmedia.currencyconverter.client.ClientFactory"/>
 	</bean>
 	
 	<bean id="parserFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
-		<property name="serviceLocatorInterface" value="ee.finestmedia.currencyconverter.util.ParserFactory"/>
+		<property name="serviceLocatorInterface" value="ee.finestmedia.currencyconverter.client.parser.ParserFactory"/>
+	</bean>
+	
+	<bean id="ConverterServiceImpl" class="ee.finestmedia.currencyconverter.service.impl.ConverterServiceImpl">
+		<property name="clientFactory" ref="clientFactory"/>
 	</bean>
 
 	<bean id="CurrencyDataFeedClient" class="ee.finestmedia.currencyconverter.client.CurrencyDataFeedClient">

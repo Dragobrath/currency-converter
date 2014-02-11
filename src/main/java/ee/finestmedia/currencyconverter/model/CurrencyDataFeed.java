@@ -1,7 +1,6 @@
 package ee.finestmedia.currencyconverter.model;
 
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.Date;
 import java.util.Set;
 
@@ -39,7 +38,6 @@ public class CurrencyDataFeed {
 
     public Entry(String currencyCode, Date date, BigDecimal rate) {
       this.setCurrencyCode(currencyCode);
-      this.setDisplayName(Currency.getInstance(currencyCode).getDisplayName());
       this.date = date;
       this.rate = rate;
     }

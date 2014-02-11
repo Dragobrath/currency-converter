@@ -24,9 +24,9 @@ public class XmlParser implements Parser {
   @Autowired
   XMLProcessingService xmlProcessingService;
 
-  public CurrencyDataFeed getCurrencyDataFeed(CurrencyDataSource currencyDataSource, Date date, Class<?> classToUnmarshal) throws JAXBException, IOException {
+  public CurrencyDataFeed getCurrencyDataFeed(CurrencyDataSource currencyDataSource, Date date, Class<?> responseType) throws JAXBException, IOException {
     String url = getUrlWithAppliedDate(currencyDataSource, date);
-    xmlProcessingService.unmarshalXMLFromURL(url, classToUnmarshal);
+    xmlProcessingService.unmarshalXMLFromURL(url, responseType);
     return null;
   }
 

@@ -9,7 +9,7 @@ import ee.finestmedia.currencyconverter.generated.CurrencyDataSources.CurrencyDa
 import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
 
 public interface Parser {
-  
-  CurrencyDataFeed getCurrencyDataFeed(CurrencyDataSource currencyDataSource, Date date, Class<?> classToUnmarshal) throws JAXBException, IOException;
+
+  CurrencyDataFeed getCurrencyDataFeed(CurrencyDataSource currencyDataSource, Date date, Class<?> responseType) throws JAXBException, IOException;
 
 }

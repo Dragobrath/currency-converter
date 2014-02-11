@@ -15,7 +15,8 @@ import ee.finestmedia.currencyconverter.service.XMLProcessingService;
 
 @Service
 public class ConfigurationServiceImpl implements ConfigurationService {
-
+  
+  private static final String XML_CONFIGURATION_PATH = "currencyDataSources.xml";
   private static final Logger LOG = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
 
   @Autowired
@@ -28,7 +29,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
       return currencyDataSources;
     }
     try {
-      currencyDataSources = (CurrencyDataSources) xmlProcessingService.unmarshalXMLFromFile("currencyDataSources.xml", CurrencyDataSources.class);
+      currencyDataSources = (CurrencyDataSources) xmlProcessingService.unmarshalXMLFromFile(XML_CONFIGURATION_PATH, CurrencyDataSources.class);
     } catch (JAXBException | IOException e) {
       LOG.error("Could not load currency data source configuration");
       LOG.error(e.getMessage(), e);
