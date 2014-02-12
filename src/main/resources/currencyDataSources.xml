@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CurrencyDataSources xmlns="http://finestmedia.ee/currencyconverter/generated">
+<CurrencyDataSources xmlns="http://finestmedia.ee/currencyconverter/generated"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://finestmedia.ee/currencyconverter/generated xsd/CurrencyDataSources.xsd">
 	<CurrencyDataSource>
 		<id>eestipank</id>
 		<displayName>Eesti Pank</displayName>

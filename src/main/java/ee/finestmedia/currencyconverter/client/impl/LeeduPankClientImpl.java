@@ -2,6 +2,8 @@ package ee.finestmedia.currencyconverter.client.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -10,7 +12,6 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.Set;
 
-import ee.finestmedia.currencyconverter.client.CurrencyDataFeedClient;
 import ee.finestmedia.currencyconverter.client.parser.ParserFactory;
 import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
 import ee.finestmedia.currencyconverter.util.CurrencyUtil;
@@ -18,6 +19,7 @@ import ee.finestmedia.currencyconverter.util.exception.EURNotFoundException;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 import generated.ExchangeRates;
 
+@Repository("leedupank")
 public class LeeduPankClientImpl extends AbstractBaseClientImpl {
 
   private static final Logger LOG = LoggerFactory.getLogger(LeeduPankClientImpl.class);
@@ -26,11 +28,8 @@ public class LeeduPankClientImpl extends AbstractBaseClientImpl {
   private static final String DATA_TYPE = "xml";
   private static final String RESPONSE_DATE_FORMAT = "YYYY.MM.DD";
 
+  @Autowired
   private ParserFactory parserFactory;
-
-  public void setParserFactory(ParserFactory parserFactory) {
-    this.parserFactory = parserFactory;
-  }
 
   @Override
   protected CurrencyDataFeed mapParserResponseToCurrencyDataFeedModel(Object parserResponse) throws MappingException, ParseException {

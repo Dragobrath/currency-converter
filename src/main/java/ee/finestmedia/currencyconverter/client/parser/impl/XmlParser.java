@@ -17,7 +17,7 @@ import ee.finestmedia.currencyconverter.service.XMLProcessingService;
 /**
  * @author Anton Dubov
  */
-@Repository
+@Repository("xmlParser")
 public class XmlParser implements Parser {
 
   @Autowired

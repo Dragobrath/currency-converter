@@ -1,5 +1,8 @@
 package ee.finestmedia.currencyconverter.client.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,17 +15,15 @@ import ee.finestmedia.currencyconverter.util.exception.MappingException;
 import info.eestipank.producers.types.Report;
 import info.eestipank.producers.types.Report.Body.Currencies.Currency;
 
+@Repository("eestipank")
 public class EestiPankClientImpl extends AbstractBaseClientImpl {
 
   private static final Class<?> RESPONSE_TYPE = Report.class;
   private static final String DATA_TYPE = "xml";
   private static final String RESPONSE_DATE_FORMAT = "DD.MM.YY";
 
+  @Autowired
   private ParserFactory parserFactory;
-
-  public void setParserFactory(ParserFactory parserFactory) {
-    this.parserFactory = parserFactory;
-  }
 
   @Override
   protected CurrencyDataFeed mapParserResponseToCurrencyDataFeedModel(Object parserResponse) throws MappingException, ParseException {

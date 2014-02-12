@@ -7,6 +7,8 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBException;
 
@@ -22,23 +24,22 @@ import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
 import ee.finestmedia.currencyconverter.model.UnifiedCurrencyDataFeed;
 import ee.finestmedia.currencyconverter.service.ConfigurationService;
 import ee.finestmedia.currencyconverter.service.ConverterService;
+import ee.finestmedia.currencyconverter.util.CustomKeyGeneratorUtil;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 
 /**
  * @author Anton Dubov
  */
+@Service
 public class ConverterServiceImpl implements ConverterService {
-  
+
   private static final Logger LOG = LoggerFactory.getLogger(ConverterServiceImpl.class);
 
   @Autowired
   private ConfigurationService configurationService;
-  
+
+  @Autowired
   private ClientFactory clientFactory;
-  
-  public void setClientFactory(ClientFactory clientFactory) {
-    this.clientFactory = clientFactory;
-  }
 
   @Override
   public UnifiedCurrencyDataFeed getCurrenciesList() {
@@ -57,6 +58,7 @@ public class ConverterServiceImpl implements ConverterService {
     UnifiedCurrencyDataFeed dataFeeds = new UnifiedCurrencyDataFeed();
     try {
       dataFeeds = getUnifiedCurrencyFeed(date);
+      // TODO: Implement calculation
     } catch (JAXBException | IOException | MappingException | ParseException e) {
       LOG.error(e.getMessage(), e);
     }
@@ -68,15 +70,22 @@ public class ConverterServiceImpl implements ConverterService {
     UnifiedCurrencyDataFeed unifiedCurrencyDataFeed = new UnifiedCurrencyDataFeed();
     for (CurrencyDataSource currencyDataSource : currencyDataSources.getCurrencyDataSource()) {
       if (currencyDataSource.isEnabled()) {
-        unifiedCurrencyDataFeed.addCurrencyDataFeed(getCurrencyFeedFromDataSource(currencyDataSource, date));
+        CurrencyDataFeed currencyDataFeed = ((ConverterService) this).getCurrencyFeedFromDataSourceClient(currencyDataSource, date);
+        unifiedCurrencyDataFeed.addCurrencyDataFeed(currencyDataFeed);
       }
     }
     return unifiedCurrencyDataFeed;
   }
 
-  private CurrencyDataFeed getCurrencyFeedFromDataSource(CurrencyDataSource currencyDataSource, Date date) throws JAXBException, IOException, MappingException, ParseException {
+  @Cacheable(value = "feedByDateCache", key = CustomKeyGeneratorUtil.SPEL_EXPRESSION_GENERATE_KEY_FOR_FEED_BY_DATE_CACHE)
+  @Override
+  public CurrencyDataFeed getCurrencyFeedFromDataSourceClient(CurrencyDataSource currencyDataSource, Date date) throws JAXBException,
+                                                                                                               IOException,
+                                                                                                               MappingException,
+                                                                                                               ParseException {
+    LOG.info("feedByDateCache for key {} was not found. Creating a new one.", CustomKeyGeneratorUtil.getKey(currencyDataSource.getId(), date));
     CurrencyDataFeedClient dataFeedClient = clientFactory.getClient(currencyDataSource.getId());
-    return dataFeedClient.getCurrencyDataFeed(currencyDataSource, date);
+    CurrencyDataFeed currencyDataFeed = dataFeedClient.getCurrencyDataFeed(currencyDataSource, date);
+    return currencyDataFeed;
   }
-
 }

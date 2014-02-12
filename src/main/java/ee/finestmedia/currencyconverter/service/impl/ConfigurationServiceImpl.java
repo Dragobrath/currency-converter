@@ -24,7 +24,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
   
   private CurrencyDataSources currencyDataSources = new CurrencyDataSources();
 
-  public CurrencyDataSources getCurrencyDataSources() {
+  public synchronized CurrencyDataSources getCurrencyDataSources() {
     if (isThereAnyCurrencyDataSources()) {
       return currencyDataSources;
     }

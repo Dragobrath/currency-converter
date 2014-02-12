@@ -1,36 +1,41 @@
 package ee.finestmedia.currencyconverter.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import ee.finestmedia.currencyconverter.generated.CurrencyDataSources.CurrencyDataSource;
 import ee.finestmedia.currencyconverter.util.CollectionsUtil;
 
-public class CurrencyDataFeed {
+public class CurrencyDataFeed implements Serializable {
 
-  private CurrencyDataSource currencyDataSource;
+  private static final long serialVersionUID = 1L;
+
+  private String dataSourceDisplayName;
   private Set<Entry> entries = new HashSet<>();
 
-  public CurrencyDataSource getCurrencyDataSource() {
-    return currencyDataSource;
+  public String getDataSourceDisplayName() {
+    return dataSourceDisplayName;
   }
 
-  public void setCurrencyDataSource(CurrencyDataSource currencyDataSource) {
-    this.currencyDataSource = currencyDataSource;
+  public void setDataSourceDisplayName(String dataSourceDisplayName) {
+    this.dataSourceDisplayName = dataSourceDisplayName;
   }
 
   public Set<Entry> getEntries() {
     return entries;
   }
-  
-  public List<Entry> getEntriesAsSortedList() {    
+
+  public List<Entry> getEntriesAsSortedList() {
     return CollectionsUtil.asSortedList(entries);
   }
 
-  public static class Entry implements Comparable<Entry> {
+  public static class Entry implements Comparable<Entry>, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String currencyCode;
     private String displayName;
     private Date date;
