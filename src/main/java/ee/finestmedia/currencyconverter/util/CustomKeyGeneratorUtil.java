@@ -20,7 +20,6 @@ public class CustomKeyGeneratorUtil {
    * @return generated key
    */
   public static String getKey(String id, Date date) {
-    System.out.println("Generating key...");
     return id + "_" + new SimpleDateFormat("dd-MM-YYYY").format(date);
   }
 
