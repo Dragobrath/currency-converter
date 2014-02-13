@@ -39,7 +39,7 @@ public class HomeController {
       LOG.error(e.getMessage(), e);
       model.addAttribute(MESSAGE, MESSAGE_ERROR);
     }
-    
+
     if (feed.getUnifiedDataFeedEntries().isEmpty()) {
       LOG.error("Feeds are empty");
       model.addAttribute(MESSAGE, MESSAGE_NO_COURSES_FOUND);
