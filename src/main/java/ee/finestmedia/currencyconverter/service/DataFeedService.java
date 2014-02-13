@@ -10,8 +10,24 @@ import ee.finestmedia.currencyconverter.generated.DataFeedSources.DataFeedSource
 import ee.finestmedia.currencyconverter.model.DataFeed;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 
+/**
+ * Service for communication with DataFeedSourceClients
+ * 
+ * @author Anton Dubov
+ */
 public interface DataFeedService {
 
+  /**
+   * Gets data feed for given date from DataFeedSourceClient implementation defined by dataFeedSource.id
+   * 
+   * @param dataFeedSource
+   * @param date
+   * @return data feed
+   * @throws JAXBException
+   * @throws IOException
+   * @throws MappingException
+   * @throws ParseException
+   */
   DataFeed getDataFeedFromDataFeedSourceClient(DataFeedSource dataFeedSource, Date date) throws JAXBException, IOException, MappingException, ParseException;
 
 }

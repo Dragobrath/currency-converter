@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 
+import ee.finestmedia.currencyconverter.model.UIRequest;
+
 import ee.finestmedia.currencyconverter.generated.DataFeedSources;
 import ee.finestmedia.currencyconverter.generated.DataFeedSources.DataFeedSource;
 import ee.finestmedia.currencyconverter.model.DataFeed;
@@ -52,14 +54,10 @@ public class ConverterServiceImpl implements ConverterService {
   }
 
   @Override
-  public UnifiedDataFeed convertCurrency(String originCurrencyCode, String destinationCurrencyCode, double amount, Date date) {
+  public UnifiedDataFeed convertCurrency(UIRequest request) throws JAXBException, IOException, MappingException, ParseException {
     UnifiedDataFeed dataFeeds = new UnifiedDataFeed();
-    try {
-      dataFeeds = getUnifiedDataFeed(date);
-      // TODO: Implement calculation
-    } catch (JAXBException | IOException | MappingException | ParseException e) {
-      LOG.error(e.getMessage(), e);
-    }
+    dataFeeds = getUnifiedDataFeed(request.getDate());
+    // TODO: Implement calculation
     return dataFeeds;
   }
 

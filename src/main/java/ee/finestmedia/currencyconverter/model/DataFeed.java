@@ -109,7 +109,7 @@ public class DataFeed implements Serializable {
 
     @Override
     public int compareTo(Entry entry) {
-      return currencyCode.compareTo(entry.getCurrencyCode());
+      return currencyCode.compareTo(entry.getDisplayName());
     }
 
   }
