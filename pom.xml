@@ -37,24 +37,6 @@
 	        <artifactId>spring-context-support</artifactId>
 	        <version>${org.springframework-version}</version>
 	    </dependency>
-	    <dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aspects</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-		<dependency>
-	        <groupId>org.springframework</groupId>
-	        <artifactId>spring-tx</artifactId>
-	        <version>${org.springframework-version}</version>
-	    </dependency>
-	    
-	    <!-- JPA -->
-	    <dependency>
-	        <groupId>javax.persistence</groupId>
-	        <artifactId>persistence-api</artifactId>
-	        <version>1.0</version>
-	        <scope>provided</scope>
-	    </dependency>
 	    
 	    <!-- GSON -->
 	    <dependency>
@@ -68,18 +50,6 @@
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
 			<version>2.6.6</version>
-		</dependency>
-
-		<!-- AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>${org.aspectj-version}</version>
 		</dependency>
 		
 		<!-- Logging -->
@@ -219,27 +189,6 @@
 					<clearOutputDir>false</clearOutputDir>
 				</configuration>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<configuration>
-					<complianceLevel>${java-version}</complianceLevel>
-					<aspectLibraries>
-						<aspectLibrary>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-aspects</artifactId>
-						</aspectLibrary>
-					</aspectLibraries>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>test-compile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> -->
         </plugins>
     </build>
 </project>

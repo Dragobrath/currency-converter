@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Set;
 
 import ee.finestmedia.currencyconverter.client.parser.ParserFactory;
-import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
+import ee.finestmedia.currencyconverter.model.DataFeed;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 import info.eestipank.producers.types.Report;
 import info.eestipank.producers.types.Report.Body.Currencies.Currency;
@@ -26,26 +26,26 @@ public class EestiPankClientImpl extends AbstractBaseClientImpl {
   private ParserFactory parserFactory;
 
   @Override
-  protected CurrencyDataFeed mapParserResponseToCurrencyDataFeedModel(Object parserResponse) throws MappingException, ParseException {
+  protected DataFeed mapParserResponseToDataFeedModel(Object parserResponse) throws MappingException, ParseException {
     if (!RESPONSE_TYPE.isAssignableFrom(parserResponse.getClass())) {
       throw new MappingException(RESPONSE_DOES_NOT_MATCH);
     }
 
     Report report = (Report) parserResponse;
-    CurrencyDataFeed currencyDataFeed = new CurrencyDataFeed();
-    Set<CurrencyDataFeed.Entry> entries = currencyDataFeed.getEntries();
+    DataFeed dataFeed = new DataFeed();
+    Set<DataFeed.Entry> entries = dataFeed.getEntries();
 
     String fixingsDateAsString = report.getBody().getFixingsDate();
     Date fixingsDate = new SimpleDateFormat(RESPONSE_DATE_FORMAT).parse(fixingsDateAsString);
 
     for (Currency currency : report.getBody().getCurrencies().getCurrency()) {
       BigDecimal rateAsBigDecimal = parseRateAsBigDecimal(currency.getRate());
-      CurrencyDataFeed.Entry entry = new CurrencyDataFeed.Entry(currency.getName(), fixingsDate, rateAsBigDecimal);
+      DataFeed.Entry entry = new DataFeed.Entry(currency.getName(), fixingsDate, rateAsBigDecimal);
       entry.setDisplayName(currency.getText());
       entries.add(entry);
     }
 
-    return currencyDataFeed;
+    return dataFeed;
   }
   
   private BigDecimal parseRateAsBigDecimal(String rate) {

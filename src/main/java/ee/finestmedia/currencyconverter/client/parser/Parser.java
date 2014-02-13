@@ -5,10 +5,10 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.Date;
 
-import ee.finestmedia.currencyconverter.generated.CurrencyDataSources.CurrencyDataSource;
+import ee.finestmedia.currencyconverter.generated.DataFeedSources.DataFeedSource;
 
 public interface Parser {
 
-  Object getCurrencyDataFeed(CurrencyDataSource currencyDataSource, Date date, Class<?> responseType) throws JAXBException, IOException;
+  Object getDataFeed(DataFeedSource dataFeedSource, Date date, Class<?> responseType) throws JAXBException, IOException;
 
 }

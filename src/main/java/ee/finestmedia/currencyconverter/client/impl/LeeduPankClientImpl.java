@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Set;
 
 import ee.finestmedia.currencyconverter.client.parser.ParserFactory;
-import ee.finestmedia.currencyconverter.model.CurrencyDataFeed;
+import ee.finestmedia.currencyconverter.model.DataFeed;
 import ee.finestmedia.currencyconverter.util.CurrencyUtil;
 import ee.finestmedia.currencyconverter.util.exception.EURNotFoundException;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
@@ -32,14 +32,14 @@ public class LeeduPankClientImpl extends AbstractBaseClientImpl {
   private ParserFactory parserFactory;
 
   @Override
-  protected CurrencyDataFeed mapParserResponseToCurrencyDataFeedModel(Object parserResponse) throws MappingException, ParseException {
+  protected DataFeed mapParserResponseToDataFeedModel(Object parserResponse) throws MappingException, ParseException {
     if (!RESPONSE_TYPE.isAssignableFrom(parserResponse.getClass())) {
       throw new MappingException(RESPONSE_DOES_NOT_MATCH);
     }
 
     ExchangeRates exchangeRates = (ExchangeRates) parserResponse;
-    CurrencyDataFeed currencyDataFeed = new CurrencyDataFeed();
-    Set<CurrencyDataFeed.Entry> entries = currencyDataFeed.getEntries();
+    DataFeed dataFeed = new DataFeed();
+    Set<DataFeed.Entry> entries = dataFeed.getEntries();
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(RESPONSE_DATE_FORMAT);
 
@@ -49,14 +49,14 @@ public class LeeduPankClientImpl extends AbstractBaseClientImpl {
       for (ExchangeRates.Item item : exchangeRates.getItem()) {
         Date date = simpleDateFormat.parse(item.getDate());
         BigDecimal rateOfEURToCurrency = getRateOfEURToCurrency(item, rateOfEURToLTL);
-        CurrencyDataFeed.Entry entry = new CurrencyDataFeed.Entry(item.getCurrency(), date, rateOfEURToCurrency);
+        DataFeed.Entry entry = new DataFeed.Entry(item.getCurrency(), date, rateOfEURToCurrency);
         entry.setDisplayName(Currency.getInstance(item.getCurrency()).getDisplayName());
         entries.add(entry);
       }
     } catch (EURNotFoundException e) {
       LOG.error(e.getMessage(), e);
     }
-    return currencyDataFeed;
+    return dataFeed;
   }
 
   private BigDecimal getRateOfEURToLTL(ExchangeRates exchangeRates) throws EURNotFoundException {

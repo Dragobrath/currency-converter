@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ee.finestmedia.currencyconverter.client.parser.Parser;
-import ee.finestmedia.currencyconverter.generated.CurrencyDataSources.CurrencyDataSource;
+import ee.finestmedia.currencyconverter.generated.DataFeedSources.DataFeedSource;
 import ee.finestmedia.currencyconverter.service.XMLProcessingService;
 
 /**
@@ -23,14 +23,14 @@ public class XmlParser implements Parser {
   @Autowired
   XMLProcessingService xmlProcessingService;
 
-  public Object getCurrencyDataFeed(CurrencyDataSource currencyDataSource, Date date, Class<?> responseType) throws JAXBException, IOException {
-    String url = getUrlWithAppliedDate(currencyDataSource, date);
+  public Object getDataFeed(DataFeedSource dataFeedSource, Date date, Class<?> responseType) throws JAXBException, IOException {
+    String url = getUrlWithAppliedDate(dataFeedSource, date);
     return xmlProcessingService.unmarshalXMLFromURL(url, responseType);
   }
 
-  private String getUrlWithAppliedDate(CurrencyDataSource currencyDataSource, Date date) {
-    String baseUrl = currencyDataSource.getUrl();
-    DateFormat dateFormat = new SimpleDateFormat(currencyDataSource.getDateFormat());
+  private String getUrlWithAppliedDate(DataFeedSource dataFeedSource, Date date) {
+    String baseUrl = dataFeedSource.getUrl();
+    DateFormat dateFormat = new SimpleDateFormat(dataFeedSource.getDateFormat());
     return baseUrl + dateFormat.format(date);
   }
 

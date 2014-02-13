@@ -9,36 +9,36 @@ import javax.xml.bind.JAXBException;
 
 import java.io.IOException;
 
-import ee.finestmedia.currencyconverter.generated.CurrencyDataSources;
+import ee.finestmedia.currencyconverter.generated.DataFeedSources;
 import ee.finestmedia.currencyconverter.service.ConfigurationService;
 import ee.finestmedia.currencyconverter.service.XMLProcessingService;
 
 @Service
 public class ConfigurationServiceImpl implements ConfigurationService {
   
-  private static final String XML_CONFIGURATION_PATH = "currencyDataSources.xml";
+  private static final String XML_CONFIGURATION_PATH = "dataFeedSources.xml";
   private static final Logger LOG = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
 
   @Autowired
   private XMLProcessingService xmlProcessingService;
   
-  private CurrencyDataSources currencyDataSources = new CurrencyDataSources();
+  private DataFeedSources dataFeedSources = new DataFeedSources();
 
-  public synchronized CurrencyDataSources getCurrencyDataSources() {
-    if (isThereAnyCurrencyDataSources()) {
-      return currencyDataSources;
+  public synchronized DataFeedSources getDataFeedSources() {
+    if (isThereAnyDataFeedSources()) {
+      return dataFeedSources;
     }
     try {
-      currencyDataSources = (CurrencyDataSources) xmlProcessingService.unmarshalXMLFromFile(XML_CONFIGURATION_PATH, CurrencyDataSources.class);
+      dataFeedSources = (DataFeedSources) xmlProcessingService.unmarshalXMLFromFile(XML_CONFIGURATION_PATH, DataFeedSources.class);
     } catch (JAXBException | IOException e) {
       LOG.error("Could not load currency data source configuration");
       LOG.error(e.getMessage(), e);
     }
-    return currencyDataSources;
+    return dataFeedSources;
   }
   
-  private boolean isThereAnyCurrencyDataSources() {
-    return !(currencyDataSources.getCurrencyDataSource() == null || currencyDataSources.getCurrencyDataSource().isEmpty());
+  private boolean isThereAnyDataFeedSources() {
+    return !(dataFeedSources.getDataFeedSource() == null || dataFeedSources.getDataFeedSource().isEmpty());
   }
 
 }

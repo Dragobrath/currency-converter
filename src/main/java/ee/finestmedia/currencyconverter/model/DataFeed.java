@@ -9,19 +9,19 @@ import java.util.Set;
 
 import ee.finestmedia.currencyconverter.util.CollectionsUtil;
 
-public class CurrencyDataFeed implements Serializable {
+public class DataFeed implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private String dataSourceDisplayName;
+  private String dataFeedSourceDisplayName;
   private Set<Entry> entries = new HashSet<>();
 
-  public String getDataSourceDisplayName() {
-    return dataSourceDisplayName;
+  public String getDataFeedSourceDisplayName() {
+    return dataFeedSourceDisplayName;
   }
 
-  public void setDataSourceDisplayName(String dataSourceDisplayName) {
-    this.dataSourceDisplayName = dataSourceDisplayName;
+  public void setDataFeedSourceDisplayName(String dataFeedSourceDisplayName) {
+    this.dataFeedSourceDisplayName = dataFeedSourceDisplayName;
   }
 
   public Set<Entry> getEntries() {

@@ -1,6 +1,5 @@
 package ee.finestmedia.currencyconverter.controller;
 
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.xml.bind.JAXBException;
-
-import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
-import ee.finestmedia.currencyconverter.util.exception.MappingException;
-
-import ee.finestmedia.currencyconverter.generated.CurrencyDataSources.CurrencyDataSource;
-import ee.finestmedia.currencyconverter.model.UnifiedCurrencyDataFeed;
+import ee.finestmedia.currencyconverter.model.UnifiedDataFeed;
 import ee.finestmedia.currencyconverter.service.ConverterService;
 
 /**
@@ -31,6 +23,9 @@ public class HomeController {
 
   private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
 
+  private static final String ERROR = "error";
+  private static final String HOME = "home";
+
   @Autowired
   private ConverterService converterService;
 
@@ -38,8 +33,14 @@ public class HomeController {
   public String home(Locale locale, Model model) {
     LOG.info("Welcome home! The client locale is {}.", locale);
 
-    UnifiedCurrencyDataFeed feed = converterService.convertCurrency("EUR", "LTL", 100, new DateTime(1392220747523L).minusYears(4).toDate());
-    
+    UnifiedDataFeed feed;
+    try {
+      feed = converterService.getCurrenciesList();
+    } catch (Exception e) {
+      LOG.error(e.getMessage(), e);
+      return ERROR;
+    }
+
     Date date = new Date();
     DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
@@ -48,7 +49,7 @@ public class HomeController {
     model.addAttribute("feeds", feed.getUnifiedDataFeedEntries());
     model.addAttribute("serverTime", formattedDate);
 
-    return "home";
+    return HOME;
   }
 
 }
