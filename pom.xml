@@ -38,11 +38,11 @@
 	        <version>${org.springframework-version}</version>
 	    </dependency>
 	    
-	    <!-- GSON -->
+	    <!-- JSON -->
 	    <dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.2.4</version>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
 		</dependency>
 		
 		<!-- Ehcache -->

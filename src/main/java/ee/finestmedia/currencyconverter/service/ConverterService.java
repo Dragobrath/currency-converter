@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import ee.finestmedia.currencyconverter.model.UIRequest;
+import ee.finestmedia.currencyconverter.model.UIResponse;
 import ee.finestmedia.currencyconverter.model.UnifiedDataFeed;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 
@@ -24,8 +25,8 @@ public interface ConverterService {
    * 
    * @return unified data feed
    */
-  UnifiedDataFeed getCurrenciesList();
+  UnifiedDataFeed getUnifiedDataFeedForThePreviousDay();
 
-  UnifiedDataFeed convertCurrency(UIRequest request) throws JAXBException, IOException, MappingException, ParseException;
+  UIResponse convertCurrency(UIRequest request) throws JAXBException, IOException, MappingException, ParseException;
 
 }

@@ -12,23 +12,24 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.JAXBException;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import ee.finestmedia.currencyconverter.model.UIRequest;
+import java.util.Random;
 
 import ee.finestmedia.currencyconverter.generated.DataFeedSources;
 import ee.finestmedia.currencyconverter.generated.DataFeedSources.DataFeedSource;
 import ee.finestmedia.currencyconverter.model.DataFeed;
+import ee.finestmedia.currencyconverter.model.UIRequest;
+import ee.finestmedia.currencyconverter.model.UIResponse;
+import ee.finestmedia.currencyconverter.model.UIResponse.BankAndAmount;
 import ee.finestmedia.currencyconverter.model.UnifiedDataFeed;
 import ee.finestmedia.currencyconverter.service.ConfigurationService;
 import ee.finestmedia.currencyconverter.service.ConverterService;
 import ee.finestmedia.currencyconverter.service.DataFeedService;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 
-/**
- * @author Anton Dubov
- */
 @Service
 public class ConverterServiceImpl implements ConverterService {
 
@@ -36,13 +37,12 @@ public class ConverterServiceImpl implements ConverterService {
 
   @Autowired
   private ConfigurationService configurationService;
-  
+
   @Autowired
   private DataFeedService dataFeedService;
 
-
   @Override
-  public UnifiedDataFeed getCurrenciesList() {
+  public UnifiedDataFeed getUnifiedDataFeedForThePreviousDay() {
     DateTime yesterday = new DateTime().minusDays(1);
     UnifiedDataFeed dataFeeds = new UnifiedDataFeed();
     try {
@@ -54,11 +54,17 @@ public class ConverterServiceImpl implements ConverterService {
   }
 
   @Override
-  public UnifiedDataFeed convertCurrency(UIRequest request) throws JAXBException, IOException, MappingException, ParseException {
+  public UIResponse convertCurrency(UIRequest request) throws JAXBException, IOException, MappingException, ParseException {
+    UIResponse response = new UIResponse();
     UnifiedDataFeed dataFeeds = new UnifiedDataFeed();
-    dataFeeds = getUnifiedDataFeed(request.getDate());
+    DateFormat dateFormat = new SimpleDateFormat(request.getDateFormat());
+    dataFeeds = getUnifiedDataFeed(dateFormat.parse(request.getDate()));
     // TODO: Implement calculation
-    return dataFeeds;
+    // return dummy response
+    for (DataFeed dataFeed : dataFeeds.getDataFeeds()) {
+      response.getResults().add(new BankAndAmount(dataFeed.getDataFeedSourceDisplayName(), String.valueOf(new Random().nextDouble())));
+    }
+    return response;
   }
 
   private UnifiedDataFeed getUnifiedDataFeed(Date date) throws JAXBException, IOException, MappingException, ParseException {
@@ -73,5 +79,4 @@ public class ConverterServiceImpl implements ConverterService {
     return unifiedDataFeed;
   }
 
-  
 }

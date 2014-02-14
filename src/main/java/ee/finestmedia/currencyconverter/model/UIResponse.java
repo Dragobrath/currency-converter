@@ -9,6 +9,7 @@ public class UIResponse implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private List<BankAndAmount> results;
+  private int resultCode;
 
   public List<BankAndAmount> getResults() {
     Collections.sort(results);
@@ -17,6 +18,14 @@ public class UIResponse implements Serializable {
 
   public void setResults(List<BankAndAmount> results) {
     this.results = results;
+  }
+
+  public int getResultCode() {
+    return resultCode;
+  }
+
+  public void setResultCode(int resultCode) {
+    this.resultCode = resultCode;
   }
 
   public static class BankAndAmount implements Serializable, Comparable<BankAndAmount> {

@@ -1,7 +1,6 @@
 package ee.finestmedia.currencyconverter.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class UIRequest implements Serializable {
 
@@ -9,13 +8,14 @@ public class UIRequest implements Serializable {
 
   private String originCurrencyCode;
   private String destinationCurrencyCode;
-  private Date date;
+  private String date;
+  private String dateFormat;
   private double amount;
 
   public UIRequest() {
   }
 
-  public UIRequest(String originCurrencyCode, String destinationCurrencyCode, Date date, double amount) {
+  public UIRequest(String originCurrencyCode, String destinationCurrencyCode, String date, double amount) {
     this.originCurrencyCode = originCurrencyCode;
     this.destinationCurrencyCode = destinationCurrencyCode;
     this.date = date;
@@ -38,12 +38,20 @@ public class UIRequest implements Serializable {
     this.destinationCurrencyCode = destinationCurrencyCode;
   }
 
-  public Date getDate() {
+  public String getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(String date) {
     this.date = date;
+  }
+
+  public String getDateFormat() {
+    return dateFormat;
+  }
+
+  public void setDateFormat(String dateFormat) {
+    this.dateFormat = dateFormat;
   }
 
   public double getAmount() {

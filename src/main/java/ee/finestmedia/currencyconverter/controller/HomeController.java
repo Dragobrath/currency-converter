@@ -26,26 +26,27 @@ public class HomeController {
   private static final String MESSAGE_SUCCESS = "success";
   private static final String MESSAGE_ERROR = "error.internal";
   private static final String MESSAGE_NO_COURSES_FOUND = "error.nocoursesfound";
+  private static final String FEEDS = "feeds";
 
   @Autowired
   private ConverterService converterService;
 
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public String home(Locale locale, Model model) {
-    UnifiedDataFeed feed = new UnifiedDataFeed();
+    UnifiedDataFeed unifiedFeed = new UnifiedDataFeed();
     try {
-      feed = converterService.getCurrenciesList();
+      unifiedFeed = converterService.getUnifiedDataFeedForThePreviousDay();
     } catch (Exception e) {
       LOG.error(e.getMessage(), e);
       model.addAttribute(MESSAGE, MESSAGE_ERROR);
     }
 
-    if (feed.getUnifiedDataFeedEntries().isEmpty()) {
+    if (unifiedFeed.getUnifiedDataFeedEntriesAsSet().isEmpty()) {
       LOG.error("Feeds are empty");
       model.addAttribute(MESSAGE, MESSAGE_NO_COURSES_FOUND);
     }
 
-    model.addAttribute("feeds", feed.getUnifiedDataFeedEntries());
+    model.addAttribute(FEEDS, unifiedFeed.getUnifiedDataFeedEntries());
     model.addAttribute(MESSAGE, MESSAGE_SUCCESS);
 
     return HOME;
