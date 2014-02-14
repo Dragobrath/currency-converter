@@ -65,7 +65,7 @@ public class LeeduPankClientImpl extends AbstractBaseClientImpl {
         return CurrencyUtil.divide(item.getRate(), item.getQuantity());
       }
     }
-    throw new EURNotFoundException("EUR is missing from the feed!");
+    throw new EURNotFoundException(EUR_IS_MISSING_FROM_THE_FEED);
   }
 
   private BigDecimal getRateOfEURToCurrency(ExchangeRates.Item item, BigDecimal rateOfEURToLTL) {

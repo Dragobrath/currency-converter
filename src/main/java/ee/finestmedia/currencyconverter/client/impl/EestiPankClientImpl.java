@@ -1,5 +1,7 @@
 package ee.finestmedia.currencyconverter.client.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,12 +13,16 @@ import java.util.Set;
 
 import ee.finestmedia.currencyconverter.client.parser.ParserFactory;
 import ee.finestmedia.currencyconverter.model.DataFeed;
+import ee.finestmedia.currencyconverter.util.CurrencyUtil;
+import ee.finestmedia.currencyconverter.util.exception.EURNotFoundException;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 import info.eestipank.producers.types.Report;
 import info.eestipank.producers.types.Report.Body.Currencies.Currency;
 
 @Repository("eestipank")
 public class EestiPankClientImpl extends AbstractBaseClientImpl {
+
+  private static final Logger LOG = LoggerFactory.getLogger(EestiPankClientImpl.class);
 
   private static final Class<?> RESPONSE_TYPE = Report.class;
   private static final String DATA_TYPE = "xml";
@@ -33,23 +39,47 @@ public class EestiPankClientImpl extends AbstractBaseClientImpl {
 
     Report report = (Report) parserResponse;
     DataFeed dataFeed = new DataFeed();
+
+    if (report.getBody().getCurrencies().getCurrency().isEmpty()) {
+      return dataFeed;
+    }
+
     Set<DataFeed.Entry> entries = dataFeed.getEntries();
 
     String fixingsDateAsString = report.getBody().getFixingsDate();
     Date fixingsDate = new SimpleDateFormat(RESPONSE_DATE_FORMAT).parse(fixingsDateAsString);
 
-    for (Currency currency : report.getBody().getCurrencies().getCurrency()) {
-      BigDecimal rateAsBigDecimal = parseRateAsBigDecimal(currency.getRate());
-      DataFeed.Entry entry = new DataFeed.Entry(currency.getName(), fixingsDate, rateAsBigDecimal);
-      entry.setDisplayName(currency.getText());
-      entries.add(entry);
+    try {
+      BigDecimal rateOfEURToEEK = getRateOfEURToEEK(report);
+
+      for (Currency currency : report.getBody().getCurrencies().getCurrency()) {
+        BigDecimal rateAsBigDecimal = parseRateAsBigDecimal(currency.getRate());
+        DataFeed.Entry entry = new DataFeed.Entry(currency.getName(), fixingsDate, CurrencyUtil.divide(rateAsBigDecimal, rateOfEURToEEK));
+        entry.setDisplayName(currency.getText());
+        entries.add(entry);
+      }
+    } catch (EURNotFoundException e) {
+      LOG.error(e.getMessage(), e);
     }
 
     return dataFeed;
   }
-  
+
   private BigDecimal parseRateAsBigDecimal(String rate) {
-    return new BigDecimal(rate.replace(",", ".").replace(" ", ""));
+    return new BigDecimal(formatRateString(rate));
+  }
+
+  private String formatRateString(String rate) {
+    return rate.replace(",", ".").replace(" ", "");
+  }
+
+  private BigDecimal getRateOfEURToEEK(Report report) throws EURNotFoundException {
+    for (Currency currency : report.getBody().getCurrencies().getCurrency()) {
+      if ("EUR".equals(currency.getName())) {
+        return parseRateAsBigDecimal(currency.getRate());
+      }
+    }
+    throw new EURNotFoundException(EUR_IS_MISSING_FROM_THE_FEED);
   }
 
   @Override
