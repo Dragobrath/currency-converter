@@ -12,7 +12,7 @@ public class CurrencyUtil {
   public static final int PRECISION_SCALE = 10;
   
   /**
-   * Divides one number by another
+   * Divides double by integer
    * 
    * @param divident
    * @param divisor
@@ -25,13 +25,14 @@ public class CurrencyUtil {
   }
   
   /**
-   * Divides 1 by given number, thus inverts currency rate
+   * Divides one BigDecimal by another
    * 
-   * @param currencyRate
+   * @param divident
+   * @param divisor
    * @return result
    */
-  public static BigDecimal invertRate(BigDecimal currencyRate) {
-    return new BigDecimal(1).divide(currencyRate, PRECISION_SCALE, BigDecimal.ROUND_HALF_UP);
+  public static BigDecimal divide(BigDecimal divident, BigDecimal divisor) {
+    return divident.divide(divisor, PRECISION_SCALE, BigDecimal.ROUND_HALF_UP);
   }
 
 }
