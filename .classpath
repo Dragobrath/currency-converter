@@ -6,15 +6,17 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry including="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/main/webapp/WEB-INF/views"/>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+	<classpathentry kind="src" path="src/main/webapp/css"/>
+	<classpathentry kind="src" path="src/main/webapp/js"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" output="target/classes" path="target/generated-sources/jaxb">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="target/classes" path="target/generated-sources/jaxb">
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>

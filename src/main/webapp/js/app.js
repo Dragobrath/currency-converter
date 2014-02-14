@@ -1,5 +1,5 @@
 (function($){
-    $('.chosen-select' ).chosen();
+    $('.chosen-select' ).chosen({});
     $('.input-group.date').datepicker({autoclose: true});
 
     function ShowResults(data){

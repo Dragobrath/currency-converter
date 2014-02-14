@@ -1,11 +1,23 @@
 body {
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     }
+    
+.language-bar {
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 15px;
+	overflow: hidden;
+}
+
+.language-ul {
+	float: right;
+}
 
 .form-currency {
     max-width: 600px;
-    padding: 15px;
+    padding: 10px;
     margin: 0 auto;
 }
 
