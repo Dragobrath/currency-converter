@@ -11,14 +11,14 @@ import ee.finestmedia.currencyconverter.model.DataFeed;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 
 /**
- * Service for communication with DataFeedSourceClients
+ * Service for communication with DataFeedSourceClients and caching responses
  * 
  * @author Anton Dubov
  */
 public interface DataFeedService {
 
   /**
-   * Gets data feed for given date from DataFeedSourceClient implementation defined by dataFeedSource.id
+   * Gets data feed for given date from DataFeedSourceClient implementation defined by dataFeedSource.id. Response is cached.
    * 
    * @param dataFeedSource
    * @param date

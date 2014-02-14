@@ -12,6 +12,17 @@ import ee.finestmedia.currencyconverter.util.exception.MappingException;
 
 public interface DataFeedSourceClient {
 
+  /**
+   * Gets data feed from the specific client
+   * 
+   * @param dataFeedSource
+   * @param date
+   * @return data feeds
+   * @throws JAXBException
+   * @throws IOException
+   * @throws MappingException
+   * @throws ParseException
+   */
   DataFeed getDataFeed(DataFeedSource dataFeedSource, Date date) throws JAXBException, IOException, MappingException, ParseException;
 
 }

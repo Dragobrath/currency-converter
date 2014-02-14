@@ -53,8 +53,8 @@ public class EestiPankClientImpl extends AbstractBaseClientImpl {
       BigDecimal rateOfEURToEEK = getRateOfEURToEEK(report);
 
       for (Currency currency : report.getBody().getCurrencies().getCurrency()) {
-        BigDecimal rateAsBigDecimal = parseRateAsBigDecimal(currency.getRate());
-        DataFeed.Entry entry = new DataFeed.Entry(currency.getName(), fixingsDate, CurrencyUtil.divide(rateAsBigDecimal, rateOfEURToEEK));
+        BigDecimal rateOfCurrencyToEEK = parseRateAsBigDecimal(currency.getRate());
+        DataFeed.Entry entry = new DataFeed.Entry(currency.getName(), fixingsDate, CurrencyUtil.divide(rateOfEURToEEK, rateOfCurrencyToEEK));
         entry.setDisplayName(currency.getText());
         entries.add(entry);
       }

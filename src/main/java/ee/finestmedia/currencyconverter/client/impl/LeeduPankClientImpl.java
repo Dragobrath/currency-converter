@@ -70,7 +70,7 @@ public class LeeduPankClientImpl extends AbstractBaseClientImpl {
 
   private BigDecimal getRateOfEURToCurrency(ExchangeRates.Item item, BigDecimal rateOfEURToLTL) {
     BigDecimal rateOfCurrencyToLTL = CurrencyUtil.divide(item.getRate(), item.getQuantity());
-    BigDecimal rateOfEURToCurrency = rateOfEURToLTL.divide(rateOfCurrencyToLTL, CurrencyUtil.PRECISION_SCALE, BigDecimal.ROUND_HALF_UP);
+    BigDecimal rateOfEURToCurrency = CurrencyUtil.divide(rateOfEURToLTL, rateOfCurrencyToLTL);
     return rateOfEURToCurrency;
   }
 
