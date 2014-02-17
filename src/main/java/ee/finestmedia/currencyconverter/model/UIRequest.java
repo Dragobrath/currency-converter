@@ -9,7 +9,6 @@ public class UIRequest implements Serializable {
   private String originCode;
   private String destinationCode;
   private String date;
-  private String dateFormat;
   private double amount;
 
   public UIRequest() {
@@ -19,7 +18,6 @@ public class UIRequest implements Serializable {
     this.originCode = originCode;
     this.destinationCode = destinationCode;
     this.date = date;
-    this.dateFormat = dateFormat;
     this.amount = amount;
   }
 
@@ -45,14 +43,6 @@ public class UIRequest implements Serializable {
 
   public void setDate(String date) {
     this.date = date;
-  }
-
-  public String getDateFormat() {
-    return dateFormat;
-  }
-
-  public void setDateFormat(String dateFormat) {
-    this.dateFormat = dateFormat;
   }
 
   public double getAmount() {

@@ -12,15 +12,14 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.JAXBException;
 
 import java.io.IOException;
-import java.text.DateFormat;
+import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
 import ee.finestmedia.currencyconverter.generated.DataFeedSources;
 import ee.finestmedia.currencyconverter.generated.DataFeedSources.DataFeedSource;
 import ee.finestmedia.currencyconverter.model.DataFeed;
+import ee.finestmedia.currencyconverter.model.DataFeed.Entry;
 import ee.finestmedia.currencyconverter.model.UIRequest;
 import ee.finestmedia.currencyconverter.model.UIResponse;
 import ee.finestmedia.currencyconverter.model.UIResponse.BankAndAmount;
@@ -28,6 +27,8 @@ import ee.finestmedia.currencyconverter.model.UnifiedDataFeed;
 import ee.finestmedia.currencyconverter.service.ConfigurationService;
 import ee.finestmedia.currencyconverter.service.ConverterService;
 import ee.finestmedia.currencyconverter.service.DataFeedService;
+import ee.finestmedia.currencyconverter.util.CurrencyUtil;
+import ee.finestmedia.currencyconverter.util.exception.CurrencyNotFoundException;
 import ee.finestmedia.currencyconverter.util.exception.MappingException;
 
 @Service
@@ -57,12 +58,20 @@ public class ConverterServiceImpl implements ConverterService {
   public UIResponse convertCurrency(UIRequest request) throws JAXBException, IOException, MappingException, ParseException {
     UIResponse response = new UIResponse();
     UnifiedDataFeed dataFeeds = new UnifiedDataFeed();
-    DateFormat dateFormat = new SimpleDateFormat(request.getDateFormat());
-    dataFeeds = getUnifiedDataFeed(dateFormat.parse(request.getDate()));
-    // TODO: Implement calculation
-    // return dummy response
+    Date date = new Date(Long.parseLong(request.getDate()));
+    dataFeeds = getUnifiedDataFeed(date);
     for (DataFeed dataFeed : dataFeeds.getDataFeeds()) {
-      response.getResults().add(new BankAndAmount(dataFeed.getDataFeedSourceDisplayName(), String.valueOf(new Random().nextDouble())));
+      if (dataFeed.getEntries().isEmpty()) {
+        continue;
+      }
+      try {
+        String bankDisplayName = dataFeed.getDataFeedSourceDisplayName();
+        String rate;
+        rate = getRateForRequestedCurrenciesFromDataFeed(request, dataFeed).toPlainString();
+        response.getResults().add(new BankAndAmount(bankDisplayName, rate));
+      } catch (CurrencyNotFoundException e) {
+        LOG.warn(e.getMessage());
+      }
     }
     return response;
   }
@@ -77,6 +86,23 @@ public class ConverterServiceImpl implements ConverterService {
       }
     }
     return unifiedDataFeed;
+  }
+
+  private BigDecimal getRateForRequestedCurrenciesFromDataFeed(UIRequest request, DataFeed dataFeed) throws CurrencyNotFoundException {
+    BigDecimal rateOfEURToOrigin = null;
+    BigDecimal rateOfEURToDestination = null;
+    for (Entry entry : dataFeed.getEntries()) {
+      if (entry.getCurrencyCode().equals(request.getOriginCode())) {
+        rateOfEURToOrigin = entry.getRate();
+      }
+      if (entry.getCurrencyCode().equals(request.getDestinationCode())) {
+        rateOfEURToDestination = entry.getRate();
+      }
+    }
+    if (rateOfEURToDestination == null) {
+      throw new CurrencyNotFoundException("Currency " + request.getOriginCode() + " was not found in the feed: " + dataFeed.getDataFeedSourceDisplayName());
+    }
+    return CurrencyUtil.divide(rateOfEURToDestination, rateOfEURToOrigin);
   }
 
 }

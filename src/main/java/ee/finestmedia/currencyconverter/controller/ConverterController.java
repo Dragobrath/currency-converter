@@ -23,20 +23,25 @@ public class ConverterController {
 
   private static final Logger LOG = LoggerFactory.getLogger(ConverterController.class);
   private static final int RESULT_CODE_SUCCESS = 0;
-  private static final int RESULT_CODE_ERROR = 1;
+  private static final int RESULT_CODE_SERVER_ERROR = 1;
+  private static final int RESULT_CODE_COULD_NOT_FIND_RATES = 1;
 
   @Autowired
   private ConverterService converterService;
 
-  @RequestMapping(value = "/convert", method = RequestMethod.POST)
+  @RequestMapping(value = "/convert", method = RequestMethod.GET)
   public @ResponseBody
   UIResponse convert(@ModelAttribute("UIRequest") UIRequest request) {
     UIResponse response = new UIResponse();
     try {
       response = converterService.convertCurrency(request);
-      response.setResultCode(RESULT_CODE_SUCCESS);
+      if (response.getResults().isEmpty()) {
+        response.setResultCode(RESULT_CODE_COULD_NOT_FIND_RATES);
+      } else {
+        response.setResultCode(RESULT_CODE_SUCCESS);
+      }
     } catch (Exception e) {
-      response.setResultCode(RESULT_CODE_ERROR);
+      response.setResultCode(RESULT_CODE_SERVER_ERROR);
       LOG.error(e.getMessage(), e);
     }
     return response;
