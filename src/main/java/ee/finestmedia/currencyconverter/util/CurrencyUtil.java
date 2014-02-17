@@ -37,6 +37,16 @@ public class CurrencyUtil {
     return divident.divide(divisor, PRECISION_SCALE, ROUND_HALF_UP);
   }
   
+  public static String removeSpacesReplaceCommas(String string) {
+    return string.replace(",", ".").replace(" ", "");
+  }
+  
+  /**
+   * 
+   * 
+   * @param value
+   * @return
+   */
   public static BigDecimal round(BigDecimal value) {
     return value.setScale(PRECISION_SCALE, ROUND_HALF_UP);
   }

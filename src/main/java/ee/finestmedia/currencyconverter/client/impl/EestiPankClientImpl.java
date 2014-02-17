@@ -66,11 +66,7 @@ public class EestiPankClientImpl extends AbstractBaseClientImpl {
   }
 
   private BigDecimal parseRateAsBigDecimal(String rate) {
-    return new BigDecimal(formatRateString(rate));
-  }
-
-  private String formatRateString(String rate) {
-    return rate.replace(",", ".").replace(" ", "");
+    return new BigDecimal(CurrencyUtil.removeSpacesReplaceCommas(rate));
   }
 
   private BigDecimal getRateOfEURToEEK(Report report) throws EURNotFoundException {

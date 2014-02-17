@@ -110,7 +110,8 @@ public class ConverterServiceImpl implements ConverterService {
   }
 
   private String getConvertedTotal(BigDecimal rate, String amount) {
-    BigDecimal convertedTotal = rate.multiply(new BigDecimal(amount));
+    BigDecimal amountAsBigDecimal = new BigDecimal(CurrencyUtil.removeSpacesReplaceCommas(amount));
+    BigDecimal convertedTotal = rate.multiply(amountAsBigDecimal);
     return CurrencyUtil.round(convertedTotal).toPlainString();
   }
 
