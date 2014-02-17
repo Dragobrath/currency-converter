@@ -9,12 +9,12 @@ public class UIRequest implements Serializable {
   private String originCode;
   private String destinationCode;
   private String date;
-  private double amount;
+  private String amount;
 
   public UIRequest() {
   }
 
-  public UIRequest(String originCode, String destinationCode, String date, String dateFormat, double amount) {
+  public UIRequest(String originCode, String destinationCode, String date, String dateFormat, String amount) {
     this.originCode = originCode;
     this.destinationCode = destinationCode;
     this.date = date;
@@ -45,11 +45,11 @@ public class UIRequest implements Serializable {
     this.date = date;
   }
 
-  public double getAmount() {
+  public String getAmount() {
     return amount;
   }
 
-  public void setAmount(double amount) {
+  public void setAmount(String amount) {
     this.amount = amount;
   }
 

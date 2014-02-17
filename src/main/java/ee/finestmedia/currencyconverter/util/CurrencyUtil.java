@@ -2,6 +2,8 @@ package ee.finestmedia.currencyconverter.util;
 
 import java.math.BigDecimal;
 
+import static java.math.BigDecimal.ROUND_HALF_UP;
+
 /**
  * Utility class for operations on currencies
  * 
@@ -9,7 +11,7 @@ import java.math.BigDecimal;
  */
 public class CurrencyUtil {
   
-  public static final int PRECISION_SCALE = 10;
+  public static final int PRECISION_SCALE = 5;
   
   /**
    * Divides double by integer
@@ -21,7 +23,7 @@ public class CurrencyUtil {
   public static BigDecimal divide(double divident, int divisor) {
     BigDecimal dividentAsBigDecimal = BigDecimal.valueOf(divident);
     BigDecimal divisorAsBigDecimal = new BigDecimal(divisor);
-    return dividentAsBigDecimal.divide(divisorAsBigDecimal, PRECISION_SCALE, BigDecimal.ROUND_HALF_UP);
+    return dividentAsBigDecimal.divide(divisorAsBigDecimal, PRECISION_SCALE, ROUND_HALF_UP);
   }
   
   /**
@@ -32,7 +34,11 @@ public class CurrencyUtil {
    * @return result
    */
   public static BigDecimal divide(BigDecimal divident, BigDecimal divisor) {
-    return divident.divide(divisor, PRECISION_SCALE, BigDecimal.ROUND_HALF_UP);
+    return divident.divide(divisor, PRECISION_SCALE, ROUND_HALF_UP);
+  }
+  
+  public static BigDecimal round(BigDecimal value) {
+    return value.setScale(PRECISION_SCALE, ROUND_HALF_UP);
   }
 
 }

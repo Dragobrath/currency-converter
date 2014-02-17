@@ -61,16 +61,13 @@ public class ConverterServiceImpl implements ConverterService {
     Date date = new Date(Long.parseLong(request.getDate()));
     dataFeeds = getUnifiedDataFeed(date);
     for (DataFeed dataFeed : dataFeeds.getDataFeeds()) {
-      if (dataFeed.getEntries().isEmpty()) {
-        continue;
-      }
-      try {
-        String bankDisplayName = dataFeed.getDataFeedSourceDisplayName();
-        String rate;
-        rate = getRateForRequestedCurrenciesFromDataFeed(request, dataFeed).toPlainString();
-        response.getResults().add(new BankAndAmount(bankDisplayName, rate));
-      } catch (CurrencyNotFoundException e) {
-        LOG.warn(e.getMessage());
+      if (!dataFeed.getEntries().isEmpty()) {
+        try {
+          BankAndAmount bankAndAmount = calculateTotalFromDataFeed(dataFeed, request);
+          response.getResults().add(bankAndAmount);
+        } catch (CurrencyNotFoundException e) {
+          LOG.warn(e.getMessage());
+        }
       }
     }
     return response;
@@ -88,6 +85,13 @@ public class ConverterServiceImpl implements ConverterService {
     return unifiedDataFeed;
   }
 
+  private BankAndAmount calculateTotalFromDataFeed(DataFeed dataFeed, UIRequest request) throws CurrencyNotFoundException {
+    String bankDisplayName = dataFeed.getDataFeedSourceDisplayName();
+    BigDecimal rate = getRateForRequestedCurrenciesFromDataFeed(request, dataFeed);
+    String convertedTotal = getConvertedTotal(rate, request.getAmount());
+    return new BankAndAmount(bankDisplayName, convertedTotal);
+  }
+
   private BigDecimal getRateForRequestedCurrenciesFromDataFeed(UIRequest request, DataFeed dataFeed) throws CurrencyNotFoundException {
     BigDecimal rateOfEURToOrigin = null;
     BigDecimal rateOfEURToDestination = null;
@@ -103,6 +107,11 @@ public class ConverterServiceImpl implements ConverterService {
       throw new CurrencyNotFoundException("Currency " + request.getOriginCode() + " was not found in the feed: " + dataFeed.getDataFeedSourceDisplayName());
     }
     return CurrencyUtil.divide(rateOfEURToDestination, rateOfEURToOrigin);
+  }
+
+  private String getConvertedTotal(BigDecimal rate, String amount) {
+    BigDecimal convertedTotal = rate.multiply(new BigDecimal(amount));
+    return CurrencyUtil.round(convertedTotal).toPlainString();
   }
 
 }
