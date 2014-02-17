@@ -75,7 +75,7 @@ public class EestiPankClientImpl extends AbstractBaseClientImpl {
 
   private BigDecimal getRateOfEURToEEK(Report report) throws EURNotFoundException {
     for (Currency currency : report.getBody().getCurrencies().getCurrency()) {
-      if ("EUR".equals(currency.getName())) {
+      if (EUR.equals(currency.getName())) {
         return parseRateAsBigDecimal(currency.getRate());
       }
     }

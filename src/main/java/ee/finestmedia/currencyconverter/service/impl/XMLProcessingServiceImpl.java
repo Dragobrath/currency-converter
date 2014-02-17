@@ -15,6 +15,8 @@ import ee.finestmedia.currencyconverter.service.XMLProcessingService;
 
 @Service
 public class XMLProcessingServiceImpl implements XMLProcessingService {
+  
+  private static final String METHOD_GET = "GET";
 
   @Override
   public Object unmarshalXMLFromURL(String uri, Class<?> responseType) throws JAXBException, IOException {
@@ -36,7 +38,7 @@ public class XMLProcessingServiceImpl implements XMLProcessingService {
 
   private HttpURLConnection getHttpConnection(String uri) throws IOException {
     HttpURLConnection connection = (HttpURLConnection) new URL(uri).openConnection();
-    connection.setRequestMethod("GET");
+    connection.setRequestMethod(METHOD_GET);
     connection.setRequestProperty("Accept", "application/xml");
     return connection;
   }

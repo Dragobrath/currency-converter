@@ -61,7 +61,7 @@ public class LeeduPankClientImpl extends AbstractBaseClientImpl {
 
   private BigDecimal getRateOfEURToLTL(ExchangeRates exchangeRates) throws EURNotFoundException {
     for (ExchangeRates.Item item : exchangeRates.getItem()) {
-      if ("EUR".equals(item.getCurrency())) {
+      if (EUR.equals(item.getCurrency())) {
         return CurrencyUtil.divide(item.getRate(), item.getQuantity());
       }
     }
