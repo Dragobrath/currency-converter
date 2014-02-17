@@ -35,6 +35,9 @@ import ee.finestmedia.currencyconverter.util.exception.MappingException;
 public class ConverterServiceImpl implements ConverterService {
 
   private static final Logger LOG = LoggerFactory.getLogger(ConverterServiceImpl.class);
+  
+  private static final String ERROR_MESSAGE_PREFIX = "Currency ";
+  private static final String ERROR_MESSAGE_SUFFIX = " was not found in the feed: ";
 
   @Autowired
   private ConfigurationService configurationService;
@@ -104,7 +107,10 @@ public class ConverterServiceImpl implements ConverterService {
       }
     }
     if (rateOfEURToDestination == null) {
-      throw new CurrencyNotFoundException("Currency " + request.getOriginCode() + " was not found in the feed: " + dataFeed.getDataFeedSourceDisplayName());
+      throw new CurrencyNotFoundException(ERROR_MESSAGE_PREFIX + request.getOriginCode() + ERROR_MESSAGE_SUFFIX + dataFeed.getDataFeedSourceDisplayName());
+    }
+    if (rateOfEURToOrigin == null) {
+      throw new CurrencyNotFoundException(ERROR_MESSAGE_PREFIX + request.getDestinationCode() + ERROR_MESSAGE_SUFFIX + dataFeed.getDataFeedSourceDisplayName());
     }
     return CurrencyUtil.divide(rateOfEURToDestination, rateOfEURToOrigin);
   }
