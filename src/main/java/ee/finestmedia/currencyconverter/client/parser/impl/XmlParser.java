@@ -15,6 +15,8 @@ import ee.finestmedia.currencyconverter.generated.DataFeedSources.DataFeedSource
 import ee.finestmedia.currencyconverter.service.XMLProcessingService;
 
 /**
+ * XmlParser should be used to get responses from web-services which provide data feeds in xml format.
+ * 
  * @author Anton Dubov
  */
 @Repository("xmlParser")
