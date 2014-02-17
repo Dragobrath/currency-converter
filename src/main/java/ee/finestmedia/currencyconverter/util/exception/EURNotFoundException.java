@@ -5,7 +5,7 @@ package ee.finestmedia.currencyconverter.util.exception;
  * 
  * @author Anton Dubov
  */
-public class EURNotFoundException extends Exception {
+public class EURNotFoundException extends CurrencyNotFoundException {
   
   private static final long serialVersionUID = 1L;
 

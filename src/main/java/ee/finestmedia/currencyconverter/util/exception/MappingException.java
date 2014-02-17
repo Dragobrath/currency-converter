@@ -5,7 +5,7 @@ package ee.finestmedia.currencyconverter.util.exception;
  * 
  * @author Anton Dubov
  */
-public class MappingException extends Exception {
+public class MappingException extends CurrencyConverterException {
   
   private static final long serialVersionUID = 1L;
 

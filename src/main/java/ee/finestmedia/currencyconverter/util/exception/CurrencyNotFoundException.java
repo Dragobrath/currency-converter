@@ -1,6 +1,11 @@
 package ee.finestmedia.currencyconverter.util.exception;
 
-public class CurrencyNotFoundException extends Exception {
+/**
+ * Exception indicates that there is no selected currency in the feed.
+ * 
+ * @author Anton Dubov
+ */
+public class CurrencyNotFoundException extends CurrencyConverterException {
   
   private static final long serialVersionUID = 1L;
 
