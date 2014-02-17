@@ -27,6 +27,10 @@ public class HomeController {
   private static final String MESSAGE_ERROR = "error.internal";
   private static final String MESSAGE_NO_COURSES_FOUND = "error.nocoursesfound";
   private static final String FEEDS = "feeds";
+  private static final String DEFAULT_ORIGIN = "defaultOrigin";
+  private static final String DEFAULT_DESTINATION = "defaultDestination";
+  private static final String DEFAULT_ORIGIN_CODE = "EUR";
+  private static final String DEFAULT_DESTINATION_CODE = "USD";
 
   @Autowired
   private ConverterService converterService;
@@ -45,6 +49,9 @@ public class HomeController {
       LOG.error("Feeds are empty");
       model.addAttribute(MESSAGE, MESSAGE_NO_COURSES_FOUND);
     }
+    
+    model.addAttribute(DEFAULT_ORIGIN, DEFAULT_ORIGIN_CODE);
+    model.addAttribute(DEFAULT_DESTINATION, DEFAULT_DESTINATION_CODE);
 
     model.addAttribute(FEEDS, unifiedFeed.getUnifiedDataFeedEntries());
     model.addAttribute(MESSAGE, MESSAGE_SUCCESS);

@@ -65,7 +65,7 @@
             <div class="col-xs-6">
                 <select id="currency-from" name="convert-from" data-placeholder="Choose a Currency..." class="chosen-select">
                     <c:forEach items="${feeds}" var="feed">
-                    	<option><c:out value="${feed.currencyCode}" /> - <spring:message code="${feed.currencyCode}" /></option>
+                    	<option <c:if test="${feed.currencyCode == defaultOrigin}">selected</c:if>><c:out value="${feed.currencyCode}" /> - <spring:message code="${feed.currencyCode}" /></option>
                     </c:forEach>
                 </select>
             </div>
@@ -73,7 +73,7 @@
             <div class="col-xs-6">
                 <select id="currency-to" name="convert-to" data-placeholder="Choose a Currency..." class="chosen-select">
                     <c:forEach items="${feeds}" var="feed">
-                    	<option><c:out value="${feed.currencyCode}" /> - <spring:message code="${feed.currencyCode}" /></option>
+                    	<option <c:if test="${feed.currencyCode == defaultDestination}">selected</c:if>><c:out value="${feed.currencyCode}" /> - <spring:message code="${feed.currencyCode}" /></option>
                     </c:forEach>
                 </select>
             </div>
