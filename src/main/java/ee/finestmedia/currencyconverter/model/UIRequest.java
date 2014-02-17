@@ -6,8 +6,8 @@ public class UIRequest implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private String originCurrencyCode;
-  private String destinationCurrencyCode;
+  private String originCode;
+  private String destinationCode;
   private String date;
   private String dateFormat;
   private double amount;
@@ -15,27 +15,28 @@ public class UIRequest implements Serializable {
   public UIRequest() {
   }
 
-  public UIRequest(String originCurrencyCode, String destinationCurrencyCode, String date, double amount) {
-    this.originCurrencyCode = originCurrencyCode;
-    this.destinationCurrencyCode = destinationCurrencyCode;
+  public UIRequest(String originCode, String destinationCode, String date, String dateFormat, double amount) {
+    this.originCode = originCode;
+    this.destinationCode = destinationCode;
     this.date = date;
+    this.dateFormat = dateFormat;
     this.amount = amount;
   }
 
-  public String getOriginCurrencyCode() {
-    return originCurrencyCode;
+  public String getOriginCode() {
+    return originCode;
   }
 
-  public void setOriginCurrencyCode(String originCurrencyCode) {
-    this.originCurrencyCode = originCurrencyCode;
+  public void setOriginCode(String originCode) {
+    this.originCode = originCode;
   }
 
-  public String getDestinationCurrencyCode() {
-    return destinationCurrencyCode;
+  public String getDestinationCode() {
+    return destinationCode;
   }
 
-  public void setDestinationCurrencyCode(String destinationCurrencyCode) {
-    this.destinationCurrencyCode = destinationCurrencyCode;
+  public void setDestinationCode(String destinationCode) {
+    this.destinationCode = destinationCode;
   }
 
   public String getDate() {

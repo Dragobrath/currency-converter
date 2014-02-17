@@ -1,6 +1,7 @@
 package ee.finestmedia.currencyconverter.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,7 +13,11 @@ public class UIResponse implements Serializable {
   private int resultCode;
 
   public List<BankAndAmount> getResults() {
-    Collections.sort(results);
+    if (results != null) {
+      Collections.sort(results);      
+    } else {
+      results = new ArrayList<>();
+    }
     return results;
   }
 

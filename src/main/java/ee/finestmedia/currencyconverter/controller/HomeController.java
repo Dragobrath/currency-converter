@@ -15,6 +15,8 @@ import ee.finestmedia.currencyconverter.service.ConverterService;
 
 /**
  * Handles requests for the application home page.
+ * 
+ * @author Anton Dubov
  */
 @Controller
 public class HomeController {
@@ -49,7 +51,7 @@ public class HomeController {
       LOG.error("Feeds are empty");
       model.addAttribute(MESSAGE, MESSAGE_NO_COURSES_FOUND);
     }
-    
+
     model.addAttribute(DEFAULT_ORIGIN, DEFAULT_ORIGIN_CODE);
     model.addAttribute(DEFAULT_DESTINATION, DEFAULT_DESTINATION_CODE);
 

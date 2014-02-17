@@ -13,6 +13,11 @@ import ee.finestmedia.currencyconverter.model.UIRequest;
 import ee.finestmedia.currencyconverter.model.UIResponse;
 import ee.finestmedia.currencyconverter.service.ConverterService;
 
+/**
+ * Handles ajax requests
+ * 
+ * @author Anton Dubov
+ */
 @Controller
 public class ConverterController {
 
@@ -23,7 +28,7 @@ public class ConverterController {
   @Autowired
   private ConverterService converterService;
 
-  @RequestMapping(value = "/convert", method = RequestMethod.GET)
+  @RequestMapping(value = "/convert", method = RequestMethod.POST)
   public @ResponseBody
   UIResponse convert(@ModelAttribute("UIRequest") UIRequest request) {
     UIResponse response = new UIResponse();
