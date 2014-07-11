@@ -1,5 +1,5 @@
 Currency Converter 1.0.0-RC
-Author: Anton Dubov
+Author: Anton Dubov aka Dragobrath
 
 1. Installation:
 	1) Make sure that you have installed Java 7, Maven (tested with version 3.1.1) and Apache Tomcat (tested with version 7.0.40)
